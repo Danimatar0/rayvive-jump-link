@@ -5,7 +5,7 @@ const Hero = () => {
   const handleWhatsAppClick = () => {
     // Replace with your friend's actual WhatsApp business number
     const whatsappNumber = "1234567890"; // Update this number
-    const message = "Hi! I'm interested in your jump ropes from Revive.";
+    const message = "Hi! I'm interested in your jump ropes from Rayvive.";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -30,7 +30,7 @@ const Hero = () => {
           {/* Brand Logo/Name */}
           <div className="mb-8 bounce-in">
             <h1 className="text-7xl lg:text-8xl font-black text-white mb-4 tracking-tight">
-              REVIVE
+              RAYVIVE
             </h1>
             <p className="text-2xl lg:text-3xl font-semibold text-white/90 mb-2">
               Jump Into Fitness

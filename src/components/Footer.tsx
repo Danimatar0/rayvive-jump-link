@@ -13,7 +13,7 @@ const Footer = () => {
   const handleWhatsAppClick = () => {
     // Replace with your friend's actual WhatsApp business number
     const whatsappNumber = "1234567890"; // Update this number
-    const message = "Hi! I'd like to know more about Revive jump ropes.";
+    const message = "Hi! I'd like to know more about Rayvive jump ropes.";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -36,7 +36,7 @@ const Footer = () => {
           <div className="grid lg:grid-cols-4 gap-12">
             {/* Brand Section */}
             <div className="lg:col-span-2">
-              <h3 className="text-4xl font-black mb-4">REVIVE</h3>
+              <h3 className="text-4xl font-black mb-4">RAYVIVE</h3>
               <p className="text-lg text-background/80 mb-8 max-w-md leading-relaxed">
                 Transforming fitness journeys with premium jump ropes designed for performance, 
                 durability, and style. Your path to better health starts here.
@@ -140,7 +140,7 @@ const Footer = () => {
         <div className="border-t border-background/20 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-background/60 text-sm">
-              © 2024 Revive Jump Ropes. All rights reserved.
+              © 2024 Rayvive Jump Ropes. All rights reserved.
             </div>
             
             <div className="flex items-center gap-2 text-background/60 text-sm">

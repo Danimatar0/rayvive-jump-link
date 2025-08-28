@@ -7,7 +7,7 @@ const About = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-5xl font-bold text-foreground mb-6">
-            Why Choose <span className="text-primary">Revive?</span>
+            Why Choose <span className="text-primary">Rayvive?</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             We're passionate about creating the finest jump ropes that combine traditional craftsmanship 
@@ -20,14 +20,14 @@ const About = () => {
           <div>
             <h3 className="text-3xl font-bold text-foreground mb-6">Our Story</h3>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
-              Revive was born from a simple belief: everyone deserves access to high-quality fitness equipment 
+              Rayvive was born from a simple belief: everyone deserves access to high-quality fitness equipment 
               that makes working out enjoyable and effective. Our founder discovered the transformative power 
               of jump rope training and wanted to share that experience with the world.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Every rope we create is carefully designed and tested to ensure it meets the highest standards 
               of durability, performance, and style. We're not just selling equipment – we're helping you 
-              revive your passion for fitness.
+              elevate your passion for fitness.
             </p>
           </div>
           
@@ -59,7 +59,7 @@ const About = () => {
         <div className="bg-energy-gradient rounded-3xl p-12 text-center text-white">
           <h3 className="text-4xl font-bold mb-6">Our Mission</h3>
           <p className="text-xl leading-relaxed max-w-4xl mx-auto">
-            To revive the joy of fitness through innovative, high-quality jump ropes that empower people 
+            To inspire the joy of fitness through innovative, high-quality jump ropes that empower people 
             to achieve their health and wellness goals while having fun in the process.
           </p>
         </div>
