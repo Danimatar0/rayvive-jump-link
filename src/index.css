@@ -1,42 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Revive Jump Ropes Design System - Energetic & Dynamic */
 
 @layer base {
   :root {
+    /* Core Brand Colors */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 222 84% 4.9%;
 
+    /* Energy Gradient System */
+    --primary: 14 100% 57%;          /* Vibrant Orange #FF4500 */
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 24 100% 60%;     /* Lighter orange glow */
+    
+    --secondary: 201 96% 32%;        /* Deep Blue #0D7377 */
+    --secondary-foreground: 0 0% 98%;
+    
+    --accent: 339 82% 52%;           /* Electric Pink #E91E63 */
+    --accent-foreground: 0 0% 98%;
+    
+    /* Surface Colors */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    --card-foreground: 222 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    
+    /* Interactive */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 14 100% 57%;
+    
+    /* Custom Design Tokens */
+    --energy-gradient: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --hero-gradient: linear-gradient(180deg, hsl(var(--primary)) 0%, hsl(var(--secondary)) 100%);
+    --glow-shadow: 0 0 40px hsl(var(--primary-glow) / 0.3);
+    --bounce-shadow: 0 10px 30px -10px hsl(var(--primary) / 0.4);
+    
+    --radius: 0.75rem;
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +104,43 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+@layer components {
+  /* Energy Button Variants */
+  .btn-energy {
+    @apply bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold px-8 py-4 rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-[var(--glow-shadow)] border-0;
+  }
+  
+  .btn-hero {
+    @apply bg-primary text-primary-foreground font-bold px-10 py-5 rounded-2xl transition-all duration-300 hover:scale-110 hover:shadow-[var(--bounce-shadow)] border-0 text-lg;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary text-secondary-foreground font-semibold px-6 py-3 rounded-lg transition-all duration-300 hover:scale-105 border-0;
+  }
+
+  /* Gradient Backgrounds */
+  .bg-energy-gradient {
+    background: var(--energy-gradient);
+  }
+  
+  .bg-hero-gradient {
+    background: var(--hero-gradient);
+  }
+
+  /* Animation Classes */
+  .bounce-in {
+    @apply animate-[bounce-in_0.6s_ease-out];
+  }
+  
+  .float {
+    @apply animate-[float_3s_ease-in-out_infinite];
+  }
+  
+  .pulse-glow {
+    @apply animate-[pulse-glow_2s_ease-in-out_infinite];
   }
 }
