@@ -42,7 +42,7 @@ Total Price: $${totalPrice.toFixed(2)}
 
 Please let me know the next steps!`;
 
-    const whatsappNumber = "1234567890";
+    const whatsappNumber = "96181807324";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderDetails)}`;
     window.open(whatsappUrl, '_blank');
   };

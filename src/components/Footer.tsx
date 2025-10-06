@@ -12,7 +12,7 @@ import {
 const Footer = () => {
   const handleWhatsAppClick = () => {
     const message = "Hi! I have a question about Rayvive jump ropes. Can you help me?";
-    const whatsappNumber = "1234567890";
+    const whatsappNumber = "96181807324";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };

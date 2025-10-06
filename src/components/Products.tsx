@@ -34,7 +34,7 @@ const Products = () => {
 
   const handleWhatsAppRecommendations = () => {
     const message = "Hi! I'd like to get personalized recommendations for choosing the right Rayvive jump rope based on my fitness goals.";
-    const whatsappNumber = "1234567890";
+    const whatsappNumber = "96181807324";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };

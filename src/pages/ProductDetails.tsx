@@ -77,7 +77,7 @@ const ProductDetails = () => {
 
 Please let me know the next steps for ordering!`;
 
-    const whatsappNumber = "1234567890";
+    const whatsappNumber = "96181807324";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };

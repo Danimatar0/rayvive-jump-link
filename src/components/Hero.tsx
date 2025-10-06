@@ -7,7 +7,7 @@ const Hero = () => {
 
   const handleWhatsAppClick = () => {
     const message = "Hi! I'd like to start my fitness transformation with Rayvive jump ropes. Can you help me choose the right rope?";
-    const whatsappNumber = "1234567890";
+    const whatsappNumber = "96181807324";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
