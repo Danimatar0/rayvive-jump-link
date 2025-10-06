@@ -1,29 +1,43 @@
-import { Star, Zap, Award, Sparkles } from "lucide-react";
+import { Star, Sparkles } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Products = () => {
+  const navigate = useNavigate();
+
   const products = [
     {
-      name: "Classic Pro",
-      price: "$29.99",
-      image: "🪢",
-      features: ["Adjustable Length", "Comfortable Handles", "Smooth Rotation", "Beginner Friendly"],
+      id: "full-white",
+      name: "Full White",
+      price: "$12.99",
+      image: "🤍",
+      features: ["Premium White Design", "Adjustable Length", "Smooth Rotation", "Beginner Friendly"],
       popular: false
     },
     {
-      name: "Elite Speed",
-      price: "$49.99", 
-      image: "⚡",
-      features: ["Lightning Fast", "Ball Bearing System", "Weighted Handles", "Pro Design"],
+      id: "dotted",
+      name: "Dotted",
+      price: "$14.99", 
+      image: "⚪",
+      features: ["Unique Dotted Pattern", "Enhanced Grip", "Weighted Design", "Pro Performance"],
+      popular: false
+    },
+    {
+      id: "combo-package",
+      name: "Combo Package",
+      price: "$24.99",
+      originalPrice: "$27.98",
+      image: "📦",
+      features: ["Both Ropes Included", "Save $3", "Complete Training Set", "Best Value"],
       popular: true
-    },
-    {
-      name: "Heavyweight",
-      price: "$39.99",
-      image: "💪",
-      features: ["Extra Weight", "Muscle Building", "Endurance Training", "Durable Build"],
-      popular: false
     }
   ];
+
+  const handleWhatsAppRecommendations = () => {
+    const message = "Hi! I'd like to get personalized recommendations for choosing the right Rayvive jump rope based on my fitness goals.";
+    const whatsappNumber = "1234567890";
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
 
   return (
     <section className="py-24 bg-muted/30">
@@ -66,6 +80,11 @@ const Products = () => {
 
               {/* Price */}
               <div className="text-center mb-6">
+                {product.originalPrice && (
+                  <div className="text-lg text-muted-foreground line-through mb-1">
+                    {product.originalPrice}
+                  </div>
+                )}
                 <span className="text-4xl font-bold text-primary">{product.price}</span>
               </div>
 
@@ -81,10 +100,11 @@ const Products = () => {
 
               {/* CTA Button */}
               <button 
+                onClick={() => navigate(`/product/${product.id}`)}
                 className={`w-full py-4 rounded-2xl font-semibold transition-all duration-300 ${
                   product.popular 
                     ? 'btn-energy' 
-                    : 'btn-secondary hover:bg-primary hover:text-primary-foreground'
+                    : 'bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground'
                 }`}
               >
                 Learn More
@@ -99,10 +119,10 @@ const Products = () => {
             Ready to Start Your Fitness Journey?
           </h3>
           <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            All our jump ropes come with a satisfaction guarantee and lifetime customer support. 
+            All our jump ropes come with a 30-day satisfaction guarantee and lifetime customer support. 
             Contact us to find the perfect rope for your goals.
           </p>
-          <button className="btn-energy">
+          <button onClick={handleWhatsAppRecommendations} className="btn-energy">
             Get Personalized Recommendations
           </button>
         </div>

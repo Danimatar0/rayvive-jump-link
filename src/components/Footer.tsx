@@ -11,9 +11,8 @@ import {
 
 const Footer = () => {
   const handleWhatsAppClick = () => {
-    // Replace with your friend's actual WhatsApp business number
-    const whatsappNumber = "1234567890"; // Update this number
-    const message = "Hi! I'd like to know more about Rayvive jump ropes.";
+    const message = "Hi! I have a question about Rayvive jump ropes. Can you help me?";
+    const whatsappNumber = "1234567890";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };

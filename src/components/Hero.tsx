@@ -1,11 +1,13 @@
-import { MessageCircle, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-jump-rope.jpg";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   const handleWhatsAppClick = () => {
-    // Replace with your friend's actual WhatsApp business number
-    const whatsappNumber = "1234567890"; // Update this number
-    const message = "Hi! I'm interested in your jump ropes from Rayvive.";
+    const message = "Hi! I'd like to start my fitness transformation with Rayvive jump ropes. Can you help me choose the right rope?";
+    const whatsappNumber = "1234567890";
     const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -54,12 +56,14 @@ const Hero = () => {
               onClick={handleWhatsAppClick}
               className="btn-hero flex items-center justify-center gap-3 group"
             >
-              <MessageCircle className="w-6 h-6" />
-              <span>Chat with Us</span>
+              <span>Start Your Transformation</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
             
-            <button className="btn-secondary bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border border-white/30">
+            <button 
+              onClick={() => navigate("/collection")}
+              className="btn-secondary bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border border-white/30"
+            >
               View Collection
             </button>
           </div>
