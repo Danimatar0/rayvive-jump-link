@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Star, CheckCircle, MessageCircle } from "lucide-react";
 import Footer from "@/components/Footer";
+import { createWhatsAppLink } from "@/config/constants";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -77,8 +78,7 @@ const ProductDetails = () => {
 
 Please let me know the next steps for ordering!`;
 
-    const whatsappNumber = "96181807324";
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = createWhatsAppLink(message);
     window.open(whatsappUrl, '_blank');
   };
 

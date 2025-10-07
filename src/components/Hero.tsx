@@ -1,14 +1,14 @@
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-jump-rope.jpg";
+import { createWhatsAppLink } from "@/config/constants";
 
 const Hero = () => {
   const navigate = useNavigate();
 
   const handleWhatsAppClick = () => {
     const message = "Hi! I'd like to start my fitness transformation with Rayvive jump ropes. Can you help me choose the right rope?";
-    const whatsappNumber = "96181807324";
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = createWhatsAppLink(message);
     window.open(whatsappUrl, '_blank');
   };
 
