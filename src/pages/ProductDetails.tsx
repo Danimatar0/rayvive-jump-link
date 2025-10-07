@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Star, CheckCircle, MessageCircle, ExternalLink } from "lucide-react";
 import Footer from "@/components/Footer";
-import { openWhatsApp, WhatsAppMessages } from "@/lib/whatsapp";
+import { createWhatsAppLink } from "@/config/constants";
 import { useState } from "react";
 
 const ProductDetails = () => {
@@ -80,9 +80,9 @@ const ProductDetails = () => {
   };
 
   const handleConfirmPurchase = () => {
-    const message = WhatsAppMessages.productPurchase(product.name, product.price);
-    openWhatsApp(message);
-    setShowConfirmDialog(false);
+    const message = `Hi! I'm interested in purchasing the ${product.name} for ${product.price}. Could you please assist me with the order?`;
+    const whatsappUrl = createWhatsAppLink(message);
+    window.open(whatsappUrl, '_blank');
   };
 
   return (

@@ -8,11 +8,13 @@ import {
   MapPin,
   Heart
 } from "lucide-react";
-import { openWhatsApp, WhatsAppMessages } from "@/lib/whatsapp";
+import { createWhatsAppLink } from "@/config/constants";
 
 const Footer = () => {
   const handleWhatsAppClick = () => {
-    openWhatsApp(WhatsAppMessages.general);
+    const message = "Hi! I have a question about Rayvive jump ropes. Can you help me?";
+    const whatsappUrl = createWhatsAppLink(message);
+    window.open(whatsappUrl, '_blank');
   };
 
   const handleSocialClick = (platform: string) => {

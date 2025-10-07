@@ -1,8 +1,7 @@
-import { Star, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { openWhatsApp, WhatsAppMessages } from "@/lib/whatsapp";
+import { Star } from "lucide-react";
 
-const Products = () => {
+const CollectionSection = () => {
   const navigate = useNavigate();
 
   const products = [
@@ -12,7 +11,7 @@ const Products = () => {
       price: "$12.99",
       image: "🤍",
       features: ["Premium White Design", "Adjustable Length", "Smooth Rotation", "Beginner Friendly"],
-      popular: false
+      description: "Our classic Full White jump rope features a sleek, minimalist design perfect for any workout environment."
     },
     {
       id: "dotted",
@@ -20,7 +19,7 @@ const Products = () => {
       price: "$14.99", 
       image: "⚪",
       features: ["Unique Dotted Pattern", "Enhanced Grip", "Weighted Design", "Pro Performance"],
-      popular: false
+      description: "The Dotted rope combines style with functionality, featuring a unique pattern for enhanced visibility during workouts."
     },
     {
       id: "combo-package",
@@ -29,50 +28,45 @@ const Products = () => {
       originalPrice: "$27.98",
       image: "📦",
       features: ["Both Ropes Included", "Save $3", "Complete Training Set", "Best Value"],
+      description: "Get both the Full White and Dotted ropes in one package. Perfect for variety in your training routine.",
       popular: true
     }
   ];
 
-  const handleWhatsAppRecommendations = () => {
-    openWhatsApp(WhatsAppMessages.recommendations);
-  };
-
   return (
-    <section className="py-24 bg-muted/30">
+    <section id="collection" className="py-24 bg-muted/30 scroll-mt-20">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-5xl font-bold text-foreground mb-6">
-            Our <span className="text-primary">Premium Collection</span>
+            Our <span className="text-primary">Collection</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Carefully crafted jump ropes designed for every fitness level and training style. 
-            Find your perfect workout companion.
+            Premium jump ropes designed for every fitness enthusiast. Choose your perfect companion.
           </p>
         </div>
 
         {/* Products Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {products.map((product, index) => (
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {products.map((product) => (
             <div
-              key={index}
-              className={`relative bg-card rounded-3xl border-2 p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 ${
+              key={product.id}
+              className={`relative bg-card rounded-3xl border-2 p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 animate-fade-in ${
                 product.popular ? 'border-primary shadow-[var(--glow-shadow)]' : 'border-border'
               }`}
             >
               {/* Popular Badge */}
               {product.popular && (
                 <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <div className="bg-primary text-primary-foreground px-6 py-2 rounded-full text-sm font-bold flex items-center gap-2">
-                    <Sparkles className="w-4 h-4" />
-                    MOST POPULAR
+                  <div className="bg-primary text-primary-foreground px-6 py-2 rounded-full text-sm font-bold">
+                    BEST VALUE
                   </div>
                 </div>
               )}
 
               {/* Product Icon */}
               <div className="text-center mb-6">
-                <div className="text-6xl mb-4 animate-bounce-in">{product.image}</div>
+                <div className="text-6xl mb-4">{product.image}</div>
                 <h3 className="text-2xl font-bold text-foreground">{product.name}</h3>
               </div>
 
@@ -105,28 +99,14 @@ const Products = () => {
                     : 'bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground'
                 }`}
               >
-                Learn More
+                View Details
               </button>
             </div>
           ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center bg-card rounded-3xl p-12 border">
-          <h3 className="text-3xl font-bold text-foreground mb-4">
-            Ready to Start Your Fitness Journey?
-          </h3>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-            All our jump ropes come with a 30-day satisfaction guarantee and lifetime customer support. 
-            Contact us to find the perfect rope for your goals.
-          </p>
-          <button onClick={handleWhatsAppRecommendations} className="btn-energy">
-            Get Personalized Recommendations
-          </button>
         </div>
       </div>
     </section>
   );
 };
 
-export default Products;
+export default CollectionSection;

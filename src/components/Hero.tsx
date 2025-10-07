@@ -1,13 +1,15 @@
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-jump-rope.jpg";
-import { openWhatsApp, WhatsAppMessages } from "@/lib/whatsapp";
+import { createWhatsAppLink } from "@/config/constants";
 
 const Hero = () => {
   const navigate = useNavigate();
 
   const handleWhatsAppClick = () => {
-    openWhatsApp(WhatsAppMessages.heroTransformation);
+    const message = "Hi! I'd like to start my fitness transformation with Rayvive jump ropes. Can you help me choose the right rope?";
+    const whatsappUrl = createWhatsAppLink(message);
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
@@ -59,7 +61,10 @@ const Hero = () => {
             </button>
             
             <button 
-              onClick={() => navigate("/collection")}
+              onClick={() => {
+                const element = document.getElementById('collection');
+                element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }}
               className="btn-secondary bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border border-white/30"
             >
               View Collection
