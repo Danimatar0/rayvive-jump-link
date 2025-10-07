@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Favicon Generator</title>
+</head>
+<body>
+    <canvas id="canvas" width="32" height="32" style="border: 1px solid #ccc;"></canvas>
+    <br><br>
+    <button onclick="downloadFavicon()">Download as favicon.ico</button>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Clear canvas with white background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, 32, 32);
+
+        // Draw jump rope handles (orange)
+        ctx.fillStyle = '#ff4500';
+        ctx.fillRect(2, 8, 3, 16);
+        ctx.fillRect(27, 8, 3, 16);
+
+        // Draw rope cord (dark gray)
+        ctx.strokeStyle = '#333333';
+        ctx.lineWidth = 2;
+        ctx.lineCap = 'round';
+
+        // Top curve of rope
+        ctx.beginPath();
+        ctx.moveTo(5, 16);
+        ctx.quadraticCurveTo(16, 6, 27, 16);
+        ctx.stroke();
+
+        // Bottom curve of rope
+        ctx.beginPath();
+        ctx.moveTo(5, 16);
+        ctx.quadraticCurveTo(16, 26, 27, 16);
+        ctx.stroke();
+
+        // Handle grip details (white dots)
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(2.5, 10, 2, 2);
+        ctx.fillRect(2.5, 14, 2, 2);
+        ctx.fillRect(2.5, 18, 2, 2);
+        ctx.fillRect(27.5, 10, 2, 2);
+        ctx.fillRect(27.5, 14, 2, 2);
+        ctx.fillRect(27.5, 18, 2, 2);
+
+        function downloadFavicon() {
+            const link = document.createElement('a');
+            link.download = 'favicon.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>

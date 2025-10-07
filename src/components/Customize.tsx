@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Palette, Ruler, Grip, Sparkles, CheckCircle, MessageCircle } from "lucide-react";
+import { openWhatsApp, WhatsAppMessages } from "@/lib/whatsapp";
 
 const Customize = () => {
   const [selectedColor, setSelectedColor] = useState("black");
@@ -33,18 +34,14 @@ const Customize = () => {
   const totalPrice = basePrice + lengthPrice + handlePrice;
 
   const handleWhatsAppOrder = () => {
-    const orderDetails = `Hi! I'd like to order a custom Rayvive jump rope:
-    
-Color: ${colors.find(c => c.id === selectedColor)?.name}
-Length: ${lengths.find(l => l.id === selectedLength)?.name}
-Handle: ${handles.find(h => h.id === selectedHandle)?.name}
-Total Price: $${totalPrice.toFixed(2)}
+    const orderDetails = WhatsAppMessages.customOrder(
+      colors.find(c => c.id === selectedColor)?.name || '',
+      lengths.find(l => l.id === selectedLength)?.name || '',
+      handles.find(h => h.id === selectedHandle)?.name || '',
+      `$${totalPrice.toFixed(2)}`
+    );
 
-Please let me know the next steps!`;
-
-    const whatsappNumber = "96181807324";
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(orderDetails)}`;
-    window.open(whatsappUrl, '_blank');
+    openWhatsApp(orderDetails);
   };
 
   return (
@@ -200,7 +197,7 @@ Please let me know the next steps!`;
               <div className="space-y-3 mb-8">
                 <div className="flex items-center gap-3 text-muted-foreground">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span>Free shipping nationwide</span>
+                  <span>Free recommendations</span>
                 </div>
                 <div className="flex items-center gap-3 text-muted-foreground">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />

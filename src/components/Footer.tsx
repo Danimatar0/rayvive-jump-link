@@ -1,20 +1,18 @@
-import { 
-  MessageCircle, 
-  Instagram, 
-  Facebook, 
-  Twitter, 
-  Mail, 
-  Phone, 
+import {
+  MessageCircle,
+  Instagram,
+  Facebook,
+  Twitter,
+  Mail,
+  Phone,
   MapPin,
-  Heart 
+  Heart
 } from "lucide-react";
+import { openWhatsApp, WhatsAppMessages } from "@/lib/whatsapp";
 
 const Footer = () => {
   const handleWhatsAppClick = () => {
-    const message = "Hi! I have a question about Rayvive jump ropes. Can you help me?";
-    const whatsappNumber = "96181807324";
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    openWhatsApp(WhatsAppMessages.general);
   };
 
   const handleSocialClick = (platform: string) => {
@@ -116,7 +114,7 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center gap-3 text-background/80">
                   <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span>hello@revivejumpropes.com</span>
+                  <span>ravenmatar@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3 text-background/80">
                   <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
@@ -145,7 +143,7 @@ const Footer = () => {
             <div className="flex items-center gap-2 text-background/60 text-sm">
               <span>Made with</span>
               <Heart className="w-4 h-4 text-primary" />
-              <span>for fitness enthusiasts</span>
+              <span>by DanMTech</span>
             </div>
           </div>
         </div>

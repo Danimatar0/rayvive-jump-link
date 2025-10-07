@@ -1,10 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Star, CheckCircle, MessageCircle } from "lucide-react";
+import { ArrowLeft, Star, CheckCircle, MessageCircle, ExternalLink } from "lucide-react";
 import Footer from "@/components/Footer";
+import { openWhatsApp, WhatsAppMessages } from "@/lib/whatsapp";
+import { useState } from "react";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
   const products: {
     [key: string]: {
@@ -72,14 +75,14 @@ const ProductDetails = () => {
     return null;
   }
 
-  const handleWhatsAppPurchase = () => {
-    const message = `Hi! I'd like to finalize my purchase of the ${product.name} jump rope (${product.price}).
+  const handlePurchaseClick = () => {
+    setShowConfirmDialog(true);
+  };
 
-Please let me know the next steps for ordering!`;
-
-    const whatsappNumber = "96181807324";
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+  const handleConfirmPurchase = () => {
+    const message = WhatsAppMessages.productPurchase(product.name, product.price);
+    openWhatsApp(message);
+    setShowConfirmDialog(false);
   };
 
   return (
@@ -126,13 +129,18 @@ Please let me know the next steps for ordering!`;
               </div>
 
               {/* Purchase Button */}
-              <button 
-                onClick={handleWhatsAppPurchase}
-                className="btn-energy w-full flex items-center justify-center gap-3"
+              <button
+                onClick={handlePurchaseClick}
+                className="btn-energy w-full flex items-center justify-center gap-3 text-lg py-4"
               >
-                <MessageCircle className="w-5 h-5" />
-                <span>Click here to finalize your purchase (you will be redirected to WhatsApp)</span>
+                <MessageCircle className="w-6 h-6" />
+                <span>Order Now</span>
+                <ExternalLink className="w-5 h-5" />
               </button>
+
+              <p className="text-center text-sm text-muted-foreground mt-3">
+                Secure ordering via WhatsApp Business
+              </p>
             </div>
 
             {/* Description & Highlights */}
@@ -180,6 +188,51 @@ Please let me know the next steps for ordering!`;
           </div>
         </div>
       </section>
+
+      {/* Confirmation Dialog */}
+      {showConfirmDialog && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-card rounded-3xl border max-w-md w-full p-8 animate-in zoom-in-95 duration-200">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                <MessageCircle className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-foreground mb-2">
+                Complete Your Order
+              </h3>
+              <p className="text-muted-foreground">
+                You'll be redirected to WhatsApp to finalize your purchase of the{" "}
+                <span className="font-semibold text-foreground">{product.name}</span> for{" "}
+                <span className="font-semibold text-primary">{product.price}</span>.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <button
+                onClick={handleConfirmPurchase}
+                className="btn-energy w-full flex items-center justify-center gap-3"
+              >
+                <MessageCircle className="w-5 h-5" />
+                <span>Continue to WhatsApp</span>
+                <ExternalLink className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => setShowConfirmDialog(false)}
+                className="w-full py-3 px-4 rounded-2xl border border-border hover:bg-muted/50 transition-colors text-muted-foreground"
+              >
+                Cancel
+              </button>
+            </div>
+
+            <div className="mt-4 text-center">
+              <p className="text-xs text-muted-foreground">
+                🔒 Secure ordering • 30-day guarantee • Fast response
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </main>

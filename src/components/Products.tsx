@@ -1,5 +1,6 @@
 import { Star, Sparkles } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { openWhatsApp, WhatsAppMessages } from "@/lib/whatsapp";
 
 const Products = () => {
   const navigate = useNavigate();
@@ -33,10 +34,7 @@ const Products = () => {
   ];
 
   const handleWhatsAppRecommendations = () => {
-    const message = "Hi! I'd like to get personalized recommendations for choosing the right Rayvive jump rope based on my fitness goals.";
-    const whatsappNumber = "96181807324";
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    openWhatsApp(WhatsAppMessages.recommendations);
   };
 
   return (
