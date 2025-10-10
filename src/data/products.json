@@ -2,6 +2,7 @@
   "full-white": {
     "id": "full-white",
     "name": "Full White",
+    "originalPrice": "$15.99",
     "price": "$12.99",
     "image": "🤍",
     "features": ["Premium White Design", "Adjustable Length", "Smooth Rotation", "Beginner Friendly"],
@@ -18,6 +19,7 @@
   "dotted": {
     "id": "dotted",
     "name": "Dotted",
+    "originalPrice": "$17.99",
     "price": "$14.99",
     "image": "⚪",
     "features": ["Unique Dotted Pattern", "Enhanced Grip", "Weighted Design", "Pro Performance"],
@@ -33,8 +35,8 @@
   "combo-package": {
     "id": "combo-package",
     "name": "Combo Package",
+    "originalPrice": "$27.99",
     "price": "$24.99",
-    "originalPrice": "$27.98",
     "image": "📦",
     "features": ["Both Ropes Included", "Save $3", "Complete Training Set", "Best Value"],
     "description": "Get both the Full White and Dotted ropes in one package. Perfect for variety in your training routine, this combo gives you everything you need to progress from beginner to advanced levels. Switch between styles based on your workout intensity and goals.",

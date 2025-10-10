@@ -54,7 +54,7 @@ const ProductDetails = () => {
               <div className="mb-8">
                 {product.price && (
                   <div className="text-xl text-muted-foreground line-through mb-2">
-                    {product.price}
+                    {product.originalPrice}
                   </div>
                 )}
                 <div className="text-5xl font-black text-primary">{product.price}</div>
