@@ -52,9 +52,9 @@ const ProductDetails = () => {
               <h1 className="text-4xl font-bold text-foreground mb-4">{product.name}</h1>
               
               <div className="mb-8">
-                {product.originalPrice && (
+                {product.price && (
                   <div className="text-xl text-muted-foreground line-through mb-2">
-                    {product.originalPrice}
+                    {product.price}
                   </div>
                 )}
                 <div className="text-5xl font-black text-primary">{product.price}</div>
