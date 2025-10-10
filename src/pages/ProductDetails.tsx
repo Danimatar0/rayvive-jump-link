@@ -3,72 +3,14 @@ import { ArrowLeft, Star, CheckCircle, MessageCircle, ExternalLink } from "lucid
 import Footer from "@/components/Footer";
 import { createWhatsAppLink } from "@/config/constants";
 import { useState } from "react";
+import productsData from "@/data/products.json";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
 
-  const products: {
-    [key: string]: {
-      name: string;
-      price: string;
-      originalPrice?: string;
-      image: string;
-      features: string[];
-      description: string;
-      highlights: string[];
-    };
-  } = {
-    "full-white": {
-      name: "Full White",
-      price: "$12.99",
-      image: "🤍",
-      features: ["Premium White Design", "Adjustable Length", "Smooth Rotation", "Beginner Friendly"],
-      description: "Our classic Full White jump rope features a sleek, minimalist design perfect for any workout environment. The pristine white color adds elegance to your fitness routine while the adjustable length ensures a perfect fit for users of all heights.",
-      highlights: [
-        "Durable PVC-coated cable",
-        "Comfortable foam handles",
-        "Adjustable from 7ft to 10ft",
-        "Lightweight at only 4oz",
-        "Smooth 360° rotation",
-        "Perfect for cardio and endurance"
-      ]
-    },
-    "dotted": {
-      name: "Dotted",
-      price: "$14.99",
-      image: "⚪",
-      features: ["Unique Dotted Pattern", "Enhanced Grip", "Weighted Design", "Pro Performance"],
-      description: "The Dotted rope combines style with functionality, featuring a unique pattern for enhanced visibility during workouts. The slightly weighted design provides better control and feedback, making it ideal for speed training and double-unders.",
-      highlights: [
-        "Distinctive dotted pattern design",
-        "Weighted cable for better control",
-        "Enhanced visibility during workouts",
-        "Professional-grade ball bearings",
-        "Ergonomic grip handles",
-        "Ideal for CrossFit and HIIT"
-      ]
-    },
-    "combo-package": {
-      name: "Combo Package",
-      price: "$24.99",
-      originalPrice: "$27.98",
-      image: "📦",
-      features: ["Both Ropes Included", "Save $3", "Complete Training Set", "Best Value"],
-      description: "Get both the Full White and Dotted ropes in one package. Perfect for variety in your training routine, this combo gives you everything you need to progress from beginner to advanced levels. Switch between styles based on your workout intensity and goals.",
-      highlights: [
-        "Includes Full White + Dotted ropes",
-        "Save $3 with bundle discount",
-        "Versatile training options",
-        "Complete beginner to pro set",
-        "Carrying pouch included",
-        "Best value for serious athletes"
-      ]
-    }
-  };
-
-  const product = products[productId as keyof typeof products];
+  const product = productsData[productId as keyof typeof productsData];
 
   if (!product) {
     navigate("/collection");

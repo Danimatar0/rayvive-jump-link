@@ -74,7 +74,7 @@ const Hero = () => {
           {/* Trust Indicators */}
           <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-8 text-white/60">
             <div className="text-center">
-              <div className="text-2xl font-bold text-white">500+</div>
+              <div className="text-2xl font-bold text-white">100+</div>
               <div className="text-sm">Happy Customers</div>
             </div>
             <div className="text-center">

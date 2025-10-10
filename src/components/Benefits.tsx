@@ -131,11 +131,7 @@ Let's make fitness fun and effective together! When can we chat about the perfec
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <div className="flex items-center gap-2 text-lg">
               <CheckCircle className="w-6 h-6" />
-              <span>30-Day Money Back Guarantee</span>
-            </div>
-            <div className="flex items-center gap-2 text-lg">
-              <CheckCircle className="w-6 h-6" />
-              <span>Free recommendations</span>
+              <span>Free consultations</span>
             </div>
           </div>
           
