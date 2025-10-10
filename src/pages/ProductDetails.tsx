@@ -2,16 +2,12 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Star, CheckCircle, MessageCircle, ExternalLink } from "lucide-react";
 import Footer from "@/components/Footer";
 import { createWhatsAppLink } from "@/config/constants";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [productId]);
 
   const products: {
     [key: string]: {
