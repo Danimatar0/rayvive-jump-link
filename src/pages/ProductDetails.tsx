@@ -169,7 +169,7 @@ const ProductDetails = () => {
 
             <div className="mt-4 text-center">
               <p className="text-xs text-muted-foreground">
-                🔒 Secure ordering • 30-day guarantee • Fast response
+                🔒 Secure ordering • Fast response • Fast delivery
               </p>
             </div>
           </div>

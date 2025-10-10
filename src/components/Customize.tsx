@@ -201,10 +201,6 @@ const Customize = () => {
                 </div>
                 <div className="flex items-center gap-3 text-muted-foreground">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span>30-day satisfaction guarantee</span>
-                </div>
-                <div className="flex items-center gap-3 text-muted-foreground">
-                  <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
                   <span>Lifetime customer support</span>
                 </div>
               </div>

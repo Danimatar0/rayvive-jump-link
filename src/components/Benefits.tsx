@@ -19,7 +19,6 @@ const Benefits = () => {
 I'd love to get:
 ✅ Personalized rope recommendations
 ✅ Expert workout tips to get started
-✅ Information about your 30-day money back guarantee
 
 Let's make fitness fun and effective together! When can we chat about the perfect rope for my goals? 🎯`;
 
