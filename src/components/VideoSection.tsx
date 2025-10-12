@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
-import rayvive_in_action_mp4 from "@/assets/main_video.mp4";
+import rayvive_in_action_mp4 from "@/assets/rayvive-in-action.mp4";
 
 const VideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);

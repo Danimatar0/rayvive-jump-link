@@ -94,7 +94,7 @@ const ProductDetails = () => {
                   <img
                     src={getProductDetailsImage(productImages[currentImageIndex])}
                     alt={`${product.name} - Image ${currentImageIndex + 1}`}
-                    className="w-full h-96 object-cover rounded-2xl"
+                    className="w-full h-96 object-contain rounded-2xl"
                   />
                 ) : (
                   <div className="text-8xl mb-6 animate-bounce-in">{product.image}</div>
