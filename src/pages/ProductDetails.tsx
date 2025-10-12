@@ -90,9 +90,7 @@ const ProductDetails = () => {
               {/* Description */}
               <div className="bg-card rounded-3xl border p-8">
                 <h2 className="text-3xl font-bold text-foreground mb-4">About This Product</h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  {product.description}
-                </p>
+                <div className="text-lg text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description }} />
               </div>
 
               {/* Highlights */}

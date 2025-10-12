@@ -1,37 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
+import productsData from "../data/products.json";
 
 const CollectionSection = () => {
   const navigate = useNavigate();
 
-  const products = [
-    {
-      id: "full-white",
-      name: "Nova White",
-      price: "$12.99",
-      image: "🤍",
-      features: ["Premium White Design", "Adjustable Length", "Smooth Rotation", "Beginner Friendly"],
-      description: "Our classic Full White jump rope features a sleek, minimalist design perfect for any workout environment."
-    },
-    {
-      id: "dotted",
-      name: "Dotted",
-      price: "$14.99", 
-      image: "⚪",
-      features: ["Unique Dotted Pattern", "Weighted Design", "Pro Performance"],
-      description: "The Dotted rope combines style with functionality, featuring a unique pattern for enhanced visibility during workouts."
-    },
-    {
-      id: "combo-package",
-      name: "Combo Package",
-      price: "$24.99",
-      originalPrice: "$27.98",
-      image: "📦",
-      features: ["Both Ropes Included", "Save $3", "Complete Training Set", "Best Value"],
-      description: "Get both the Nova White and Dotted ropes in one package. Perfect for variety in your training routine.",
-      popular: true
-    }
-  ];
+  const products = Object.values(productsData);
 
   return (
     <section id="collection" className="py-24 bg-muted/30 scroll-mt-20">
