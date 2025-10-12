@@ -17,7 +17,7 @@ const About = () => {
 
         {/* Story Section */}
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
-          <div>
+          <div id="our-story">
             <h3 className="text-3xl font-bold text-foreground mb-6">Our Story</h3>
             <p className="text-lg text-muted-foreground mb-6 leading-relaxed">
               Rayvive was born from a simple belief: everyone deserves access to high-quality fitness equipment 

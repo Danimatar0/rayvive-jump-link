@@ -4,6 +4,9 @@ import Footer from "@/components/Footer";
 import { createWhatsAppLink } from "@/config/constants";
 import { useState } from "react";
 import productsData from "@/data/products.json";
+import novaWhiteImg from "@/assets/nova-white-img.jpeg";
+import aetherDottedDetailsImg from "@/assets/aether-dotted-details-img.jpeg";
+import comboPackageDetailsImg from "@/assets/combo-package-details-img.jpeg";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
@@ -16,6 +19,15 @@ const ProductDetails = () => {
     navigate("/collection");
     return null;
   }
+
+  const getProductDetailsImage = (imageFileName: string) => {
+    const imageMap: Record<string, string> = {
+      "nova-white-img.jpeg": novaWhiteImg,
+      "aether-dotted-details-img.jpeg": aetherDottedDetailsImg,
+      "combo-package-details-img.jpeg": comboPackageDetailsImg,
+    };
+    return imageMap[imageFileName];
+  };
 
   const handlePurchaseClick = () => {
     setShowConfirmDialog(true);
@@ -48,7 +60,15 @@ const ProductDetails = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Product Image & Info */}
             <div className="bg-card rounded-3xl border p-12 text-center">
-              <div className="text-8xl mb-6 animate-bounce-in">{product.image}</div>
+              {product.detailsImage ? (
+                <img
+                  src={getProductDetailsImage(product.detailsImage)}
+                  alt={product.name}
+                  className="w-full h-96 object-cover rounded-2xl mb-6 animate-bounce-in"
+                />
+              ) : (
+                <div className="text-8xl mb-6 animate-bounce-in">{product.image}</div>
+              )}
               <h1 className="text-4xl font-bold text-foreground mb-4">{product.name}</h1>
               
               <div className="mb-8">

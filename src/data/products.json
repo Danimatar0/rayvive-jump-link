@@ -5,6 +5,8 @@
     "originalPrice": "$15.99",
     "price": "$12.99",
     "image": "🤍",
+    "listImage": "nova-white-img.jpeg",
+    "detailsImage": "nova-white-img.jpeg",
     "features": [
       "Premium White Design",
       "Adjustable Length",
@@ -28,6 +30,8 @@
     "originalPrice": "$17.99",
     "price": "$14.99",
     "image": "⚪",
+    "listImage": "aether-dotted-img.jpeg",
+    "detailsImage": "aether-dotted-details-img.jpeg",
     "features": [
       "Unique Dotted Pattern",
       "Enhanced Grip",
@@ -50,6 +54,8 @@
     "originalPrice": "$27.99",
     "price": "$24.99",
     "image": "📦",
+    "listImage": "combo-package-img.jpeg",
+    "detailsImage": "combo-package-details-img.jpeg",
     "features": [
       "Both Ropes Included",
       "Save $3",
