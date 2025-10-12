@@ -86,12 +86,12 @@ const VideoSection = () => {
             <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-primary opacity-20 blur-xl group-hover:opacity-30 transition-opacity -z-10" />
           </div>
 
-          {/* Video description */}
+          {/* Video description
           <div className="text-center mt-8 text-muted-foreground">
             <p className="text-sm">
               🎥 Video automatically plays when you scroll to it
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>
