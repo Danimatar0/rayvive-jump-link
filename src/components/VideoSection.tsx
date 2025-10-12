@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
+import rayvive_in_action_mp4 from "@/assets/main_video.mp4";
 
 const VideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -67,8 +68,7 @@ const VideoSection = () => {
                 playsInline
                 poster="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&h=675&fit=crop"
               >
-                {/* Add your video source here */}
-                <source src="/path-to-your-video.mp4" type="video/mp4" />
+                <source src={rayvive_in_action_mp4} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               

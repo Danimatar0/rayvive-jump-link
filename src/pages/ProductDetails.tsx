@@ -1,32 +1,52 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Star, CheckCircle, MessageCircle, ExternalLink } from "lucide-react";
+import { ArrowLeft, Star, CheckCircle, MessageCircle, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import Footer from "@/components/Footer";
 import { createWhatsAppLink } from "@/config/constants";
 import { useState } from "react";
 import productsData from "@/data/products.json";
 import novaWhiteImg from "@/assets/nova-white-img.jpeg";
+import speedRopeNovaImg from "@/assets/speed-rope-nova-img.jpg";
+import novaWhiteComparison from "@/assets/nova-white-comparison.jpg";
 import aetherDottedDetailsImg from "@/assets/aether-dotted-details-img.jpeg";
+import beadedRopeAetherImg from "@/assets/beaded-rope-aether-img.jpg";
+import aetherComparison from "@/assets/aether-comparison.jpg";
 import comboPackageDetailsImg from "@/assets/combo-package-details-img.jpeg";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const product = productsData[productId as keyof typeof productsData];
 
   if (!product) {
-    navigate("/collection");
+    navigate("/");
     return null;
   }
 
   const getProductDetailsImage = (imageFileName: string) => {
     const imageMap: Record<string, string> = {
       "nova-white-img.jpeg": novaWhiteImg,
+      "speed-rope-nova-img.jpg": speedRopeNovaImg,
+      "nova-white-comparison.jpg": novaWhiteComparison,
       "aether-dotted-details-img.jpeg": aetherDottedDetailsImg,
+      "beaded-rope-aether-img.jpg": beadedRopeAetherImg,
+      "aether-comparison.jpg": aetherComparison,
       "combo-package-details-img.jpeg": comboPackageDetailsImg,
     };
     return imageMap[imageFileName];
+  };
+
+  const productImages = product.detailsImages || [product.detailsImage];
+  const hasMultipleImages = productImages.length > 1;
+
+  const nextImage = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % productImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length);
   };
 
   const handlePurchaseClick = () => {
@@ -45,7 +65,15 @@ const ProductDetails = () => {
       <div className="bg-muted/30 py-8">
         <div className="container mx-auto px-6">
           <button
-            onClick={() => navigate("/collection")}
+            onClick={() => {
+              navigate("/");
+              setTimeout(() => {
+                const element = document.getElementById('collection');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+              }, 100);
+            }}
             className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -60,15 +88,57 @@ const ProductDetails = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Product Image & Info */}
             <div className="bg-card rounded-3xl border p-12 text-center">
-              {product.detailsImage ? (
-                <img
-                  src={getProductDetailsImage(product.detailsImage)}
-                  alt={product.name}
-                  className="w-full h-96 object-cover rounded-2xl mb-6 animate-bounce-in"
-                />
-              ) : (
-                <div className="text-8xl mb-6 animate-bounce-in">{product.image}</div>
-              )}
+              {/* Image Carousel */}
+              <div className="relative mb-6">
+                {productImages[currentImageIndex] ? (
+                  <img
+                    src={getProductDetailsImage(productImages[currentImageIndex])}
+                    alt={`${product.name} - Image ${currentImageIndex + 1}`}
+                    className="w-full h-96 object-cover rounded-2xl"
+                  />
+                ) : (
+                  <div className="text-8xl mb-6 animate-bounce-in">{product.image}</div>
+                )}
+
+                {/* Navigation Arrows */}
+                {hasMultipleImages && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 hover:bg-background rounded-full flex items-center justify-center transition-colors border border-border"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft className="w-6 h-6 text-foreground" />
+                    </button>
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 bg-background/80 hover:bg-background rounded-full flex items-center justify-center transition-colors border border-border"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight className="w-6 h-6 text-foreground" />
+                    </button>
+                  </>
+                )}
+
+                {/* Image Indicators */}
+                {hasMultipleImages && (
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                    {productImages.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentImageIndex(index)}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          index === currentImageIndex
+                            ? 'bg-primary w-6'
+                            : 'bg-background/60 hover:bg-background/80'
+                        }`}
+                        aria-label={`Go to image ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <h1 className="text-4xl font-bold text-foreground mb-4">{product.name}</h1>
               
               <div className="mb-8">
