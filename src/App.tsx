@@ -9,6 +9,8 @@ import ProductDetails from "./pages/ProductDetails";
 import NotFound from "./pages/NotFound";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import AnalyticsProvider from './components/AnalyticsProvider';
+import CookieConsent from './components/CookieConsent';
 
 const queryClient = new QueryClient();
 
@@ -32,13 +34,15 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>  {/* ← Remove basename prop */}
-          <ScrollToTop />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/collection" element={<Collection />} />
-            <Route path="/product/:productId" element={<ProductDetails />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AnalyticsProvider>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/collection" element={<Collection />} />
+              <Route path="/product/:productId" element={<ProductDetails />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </AnalyticsProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
