@@ -40,6 +40,9 @@ jobs:
         run: npm run build
         env:
           NODE_ENV: production
+          VITE_WHATSAPP_NUMBER: ${{ secrets.VITE_WHATSAPP_NUMBER }}
+          VITE_GOOGLE_SHEETS_URL: ${{ secrets.VITE_GOOGLE_SHEETS_URL }}
+          VITE_GA_TRACKING_ID: ${{ secrets.VITE_GA_TRACKING_ID }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

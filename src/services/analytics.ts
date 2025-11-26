@@ -29,10 +29,6 @@ class AnalyticsService {
       });
 
       this.isInitialized = true;
-      
-      if (this.config.debug) {
-        console.log('Google Analytics initialized with ID:', this.config.trackingId);
-      }
     } catch (error) {
       console.error('Failed to initialize Google Analytics:', error);
     }
@@ -47,10 +43,6 @@ class AnalyticsService {
         page: path,
         title: title || document.title
       });
-
-      if (this.config.debug) {
-        console.log('Page view tracked:', path);
-      }
     } catch (error) {
       console.error('Failed to track page view:', error);
     }
@@ -66,10 +58,6 @@ class AnalyticsService {
         label,
         value
       });
-
-      if (this.config.debug) {
-        console.log('Event tracked:', { action, category, label, value });
-      }
     } catch (error) {
       console.error('Failed to track event:', error);
     }
@@ -80,10 +68,6 @@ class AnalyticsService {
 
     try {
       ReactGA.gtag('event', eventName, parameters);
-
-      if (this.config.debug) {
-        console.log('Custom event tracked:', eventName, parameters);
-      }
     } catch (error) {
       console.error('Failed to track custom event:', error);
     }

@@ -42,6 +42,7 @@ const App = () => {
               <Route path="/product/:productId" element={<ProductDetails />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <CookieConsent />
           </AnalyticsProvider>
         </BrowserRouter>
       </TooltipProvider>

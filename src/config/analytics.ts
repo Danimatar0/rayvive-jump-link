@@ -5,19 +5,20 @@ interface AnalyticsEnvironment {
 }
 
 const getAnalyticsConfig = (): AnalyticsEnvironment => {
-  const environment = process.env.NODE_ENV;
-  
+  const environment = import.meta.env.MODE;
+  const trackingId = import.meta.env.VITE_GA_TRACKING_ID || '';
+
   switch (environment) {
     case 'production':
       return {
-        trackingId: 'G-DBK0PKM3SH', // Your actual tracking ID
-        enabled: true,
+        trackingId,
+        enabled: !!trackingId,
         debug: false
       };
     case 'development':
       return {
-        trackingId: 'G-DBK0PKM3SH', // Same ID for testing
-        enabled: true,
+        trackingId,
+        enabled: !!trackingId,
         debug: true
       };
     case 'test':
