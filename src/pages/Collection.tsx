@@ -1,38 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Star } from "lucide-react";
 import Footer from "@/components/Footer";
+import productsData from "@/data/products.json";
 
 const Collection = () => {
   const navigate = useNavigate();
 
-  const products = [
-    {
-      id: "full-white",
-      name: "Full White",
-      price: "$12.99",
-      image: "🤍",
-      features: ["Premium White Design", "Adjustable Length", "Smooth Rotation", "Beginner Friendly"],
-      description: "Our classic Full White jump rope features a sleek, minimalist design perfect for any workout environment."
-    },
-    {
-      id: "dotted",
-      name: "Dotted",
-      price: "$14.99", 
-      image: "⚪",
-      features: ["Unique Dotted Pattern", "Enhanced Grip", "Weighted Design", "Pro Performance"],
-      description: "The Dotted rope combines style with functionality, featuring a unique pattern for enhanced visibility during workouts."
-    },
-    {
-      id: "combo-package",
-      name: "Combo Package",
-      price: "$24.99",
-      originalPrice: "$27.98",
-      image: "📦",
-      features: ["Both Ropes Included", "Save $3", "Complete Training Set", "Best Value"],
-      description: "Get both the Full White and Dotted ropes in one package. Perfect for variety in your training routine.",
-      popular: true
-    }
-  ];
+  const products = Object.values(productsData);
 
   return (
     <main className="min-h-screen bg-background">
@@ -102,11 +76,11 @@ const Collection = () => {
                 </ul>
 
                 {/* CTA Button */}
-                <button 
+                <button
                   onClick={() => navigate(`/product/${product.id}`)}
                   className={`w-full py-4 rounded-2xl font-semibold transition-all duration-300 ${
-                    product.popular 
-                      ? 'btn-energy' 
+                    product.popular
+                      ? 'btn-energy'
                       : 'bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground'
                   }`}
                 >

@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-jump-rope.jpg";
+import packageNobg from "@/assets/products-nobg.png";
 import { createWhatsAppLink } from "@/config/constants";
 
 const Hero = () => {
@@ -74,7 +75,7 @@ const Hero = () => {
           {/* Trust Indicators */}
           <div className="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-8 text-white/60">
             <div className="text-center">
-              <div className="text-2xl font-bold text-white">500+</div>
+              <div className="text-2xl font-bold text-white">100+</div>
               <div className="text-sm">Happy Customers</div>
             </div>
             <div className="text-center">
@@ -91,8 +92,12 @@ const Hero = () => {
         {/* Hero Visual Element */}
         <div className="flex-1 lg:flex-none lg:w-96 flex justify-center">
           <div className="relative">
-            <div className="w-80 h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center animate-float">
-              <div className="text-8xl animate-bounce-in">🪢</div>
+            <div className="w-80 h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center animate-float p-8">
+              <img
+                src={packageNobg}
+                alt="Rayvive Jump Rope Package"
+                className="w-full h-full object-contain animate-bounce-in"
+              />
             </div>
             {/* Floating Elements */}
             <div className="absolute -top-4 -right-4 w-16 h-16 bg-accent rounded-full flex items-center justify-center text-white font-bold text-lg animate-pulse-glow">

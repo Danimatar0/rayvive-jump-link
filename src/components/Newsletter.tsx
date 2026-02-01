@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Mail, CheckCircle } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
+import { submitToGoogleSheets } from "@/lib/googleSheets";
 
 const emailSchema = z.object({
   email: z.string().trim().email({ message: "Please enter a valid email address" }).max(255, { message: "Email is too long" }),
@@ -15,12 +16,10 @@ const Newsletter = () => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const { toast } = useToast();
 
-  // Add your Zapier webhook URL here
-  const ZAPIER_WEBHOOK_URL = "YOUR_ZAPIER_WEBHOOK_URL";
-
   const handleSubscribe = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    console.log("Attempting to subscribe with:", { email, name });
     // Validate inputs
     try {
       emailSchema.parse({ email, name });
@@ -35,46 +34,35 @@ const Newsletter = () => {
       }
     }
 
-    if (!ZAPIER_WEBHOOK_URL || ZAPIER_WEBHOOK_URL === "YOUR_ZAPIER_WEBHOOK_URL") {
-      toast({
-        title: "Setup Required",
-        description: "Please configure the Zapier webhook URL in the Newsletter component.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setIsLoading(true);
-    console.log("Sending newsletter subscription to Zapier:", { email, name });
+    console.log("Sending newsletter subscription to Google Sheets:", { email, name });
 
     try {
-      await fetch(ZAPIER_WEBHOOK_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        mode: "no-cors",
-        body: JSON.stringify({
-          email,
-          name,
-          timestamp: new Date().toISOString(),
-          source: "Rayvive Website",
-        }),
+      await submitToGoogleSheets({
+        name,
+        email,
+        timestamp: new Date().toISOString(),
+        source: "Rayvive Website Newsletter"
       });
 
       setIsSubscribed(true);
       setEmail("");
       setName("");
-      
+
       toast({
         title: "Successfully Subscribed! 🎉",
         description: "Thank you for joining our newsletter. Check your email soon!",
       });
     } catch (error) {
       console.error("Error subscribing:", error);
+
+      const errorMessage = error instanceof Error && error.message.includes('not configured')
+        ? "Please complete the Google Sheets setup to enable newsletter subscriptions."
+        : "Please try again later or contact us directly.";
+
       toast({
         title: "Subscription Failed",
-        description: "Please try again later or contact us directly.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {

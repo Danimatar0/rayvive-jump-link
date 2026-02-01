@@ -1,12 +1,12 @@
-import { 
-  MessageCircle, 
-  Instagram, 
-  Facebook, 
-  Twitter, 
-  Mail, 
-  Phone, 
+import {
+  MessageCircle,
+  Instagram,
+  Facebook,
+  Twitter,
+  Mail,
+  Phone,
   MapPin,
-  Heart 
+  Heart
 } from "lucide-react";
 import { createWhatsAppLink } from "@/config/constants";
 
@@ -17,10 +17,30 @@ const Footer = () => {
     window.open(whatsappUrl, '_blank');
   };
 
+  const handleWorkoutTipsClick = () => {
+    const message = "Hi! I need workout tips about jump ropes. Can you help me with training advice?";
+    const whatsappUrl = createWhatsAppLink(message);
+    window.open(whatsappUrl, '_blank');
+  };
+
+  const handleOurStoryClick = () => {
+    const element = document.getElementById('our-story');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const handleProductsClick = () => {
+    const element = document.getElementById('collection');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const handleSocialClick = (platform: string) => {
     // Replace these with actual social media handles
     const urls = {
-      instagram: "https://instagram.com/revive_jumpropes", // Update these URLs
+      instagram: "https://instagram.com/rayviverope", // Update these URLs
       facebook: "https://facebook.com/revive.jumpropes",
       twitter: "https://twitter.com/revive_fitness"
     };
@@ -59,7 +79,7 @@ const Footer = () => {
                 >
                   <Instagram className="w-6 h-6" />
                 </button>
-                <button
+                {/* <button
                   onClick={() => handleSocialClick('facebook')}
                   className="w-12 h-12 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary/20 transition-colors"
                 >
@@ -70,7 +90,7 @@ const Footer = () => {
                   className="w-12 h-12 bg-background/10 rounded-xl flex items-center justify-center hover:bg-primary/20 transition-colors"
                 >
                   <Twitter className="w-6 h-6" />
-                </button>
+                </button> */}
               </div>
             </div>
 
@@ -79,27 +99,36 @@ const Footer = () => {
               <h4 className="text-xl font-bold mb-6">Quick Links</h4>
               <ul className="space-y-4">
                 <li>
-                  <button className="text-background/80 hover:text-primary transition-colors text-left">
+                  <button
+                    onClick={handleOurStoryClick}
+                    className="text-background/80 hover:text-primary transition-colors text-left"
+                  >
                     Our Story
                   </button>
                 </li>
                 <li>
-                  <button className="text-background/80 hover:text-primary transition-colors text-left">
+                  <button
+                    onClick={handleProductsClick}
+                    className="text-background/80 hover:text-primary transition-colors text-left"
+                  >
                     Products
                   </button>
                 </li>
-                <li>
+                {/* <li>
                   <button className="text-background/80 hover:text-primary transition-colors text-left">
                     Benefits
                   </button>
-                </li>
-                <li>
+                </li> */}
+                {/* <li>
                   <button className="text-background/80 hover:text-primary transition-colors text-left">
                     Customer Reviews
                   </button>
-                </li>
+                </li> */}
                 <li>
-                  <button className="text-background/80 hover:text-primary transition-colors text-left">
+                  <button
+                    onClick={handleWorkoutTipsClick}
+                    className="text-background/80 hover:text-primary transition-colors text-left"
+                  >
                     Workout Tips
                   </button>
                 </li>
@@ -116,7 +145,7 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center gap-3 text-background/80">
                   <Mail className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span>hello@revivejumpropes.com</span>
+                  <span>ravenmatar@gmail.com</span>
                 </div>
                 <div className="flex items-center gap-3 text-background/80">
                   <MapPin className="w-5 h-5 text-primary flex-shrink-0" />
@@ -139,13 +168,13 @@ const Footer = () => {
         <div className="border-t border-background/20 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <div className="text-background/60 text-sm">
-              © 2024 Rayvive Jump Ropes. All rights reserved.
+              © 2025 Rayvive Jump Ropes. All rights reserved.
             </div>
             
             <div className="flex items-center gap-2 text-background/60 text-sm">
               <span>Made with</span>
               <Heart className="w-4 h-4 text-primary" />
-              <span>for fitness enthusiasts</span>
+              <span>by DanMTech</span>
             </div>
           </div>
         </div>

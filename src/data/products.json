@@ -1,0 +1,78 @@
+{
+  "nova-white": {
+    "id": "nova-white",
+    "name": "Nova White",
+    "originalPrice": "$15.99",
+    "price": "$12.99",
+    "image": "🤍",
+    "listImage": "nova-white-img.jpeg",
+    "detailsImage": "nova-white-img.jpeg",
+    "detailsImages": ["nova-white-img.jpeg", "speed-rope-nova-img.jpg", "nova-white-comparison.jpg"],
+    "features": [
+      "Premium White Design",
+      "Adjustable Length",
+      "Smooth Rotation",
+      "Beginner Friendly"
+    ],
+    "description": "<h3 style='font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;'>Why This Rope?</h3><p style='margin-bottom: 1rem;'><strong>Freestyle. Progress Faster.</strong></p><p style='margin-bottom: 1rem;'>Built for pure freestyle flow and rapid skill learning, it's 50% smoother and more responsive than silicone or wire ropes. Learning new skills feels natural and effortless with this rope. It's the only rope you'll need for freestyle, whether you're just starting or leveling up.</p><p style='margin-bottom: 1.5rem;'>With just 5mm of speed-weighted PVC and a nylon core, you're getting power, precision, and a full-body burn in every session.</p><h3 style='font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;'>Specs</h3><ul style='list-style: disc; padding-left: 1.5rem; margin-bottom: 1.5rem;'><li style='margin-bottom: 0.5rem;'>3.3 meters adjustable 5mm PVC cord with string core</li><li style='margin-bottom: 0.5rem;'>Easy length adjustment method, fits up to 6'4\" Height</li><li style='margin-bottom: 0.5rem;'>Unbreakable handles with a string core in the PVC for durability</li><li style='margin-bottom: 0.5rem;'>Compatible for kids</li></ul><h3 style='font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;'>SIZE GUIDE</h3><p style='margin-bottom: 0.75rem;'>All of our ropes are 3.3 meters long and are length adjustable. To size your rope follow these steps.</p><ol style='list-style: decimal; padding-left: 1.5rem;'><li style='margin-bottom: 0.5rem;'>Step on the middle of the rope.</li><li style='margin-bottom: 0.5rem;'>Pull both of the handles pointing upwards.</li><li style='margin-bottom: 0.5rem;'>The end of both handles should reach anywhere between lower chest and middle chest.</li></ol>",
+    "highlights": [
+      "Durable PVC-coated cable",
+      "Comfortable foam handles",
+      "Adjustable from 7ft to 10ft",
+      "Lightweight at only 4oz",
+      "Smooth 360° rotation",
+      "Perfect for cardio and endurance"
+    ],
+    "popular": false
+  },
+  "aether": {
+    "id": "aether",
+    "name": "Aether",
+    "originalPrice": "$17.99",
+    "price": "$14.99",
+    "image": "⚪",
+    "listImage": "aether-dotted-img.jpeg",
+    "detailsImage": "aether-dotted-details-img.jpeg",
+    "detailsImages": ["aether-dotted-details-img.jpeg", "beaded-rope-aether-img.jpg", "aether-comparison.jpg"],
+    "features": [
+      "Unique Dotted Pattern",
+      "Enhanced Grip",
+      "Weighted Design",
+      "Pro Performance"
+    ],
+    "description": "<h3 style='font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem;'>Why This Rope?</h3><p style='margin-bottom: 1rem;'><strong>Freestyle. Progress Faster.</strong></p><p style='margin-bottom: 1rem;'>Built for pure freestyle flow and rapid skill learning, it's 50% smoother and more responsive than silicone or wire ropes. Learning new skills feels natural and effortless with this rope. It's the only rope you'll need for freestyle, whether you're just starting or leveling up.</p><p style='margin-bottom: 1.5rem;'>With just 5mm of speed-weighted PVC and a nylon core, you're getting power, precision, and a full-body burn in every session.</p><h3 style='font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;'>Specs</h3><ul style='list-style: disc; padding-left: 1.5rem; margin-bottom: 1.5rem;'><li style='margin-bottom: 0.5rem;'>10ft adjustable 5mm PVC cord with string core</li><li style='margin-bottom: 0.5rem;'>Easy length adjustment method, fits up to 6'4\" Height</li><li style='margin-bottom: 0.5rem;'>Unbreakable handles with a string core in the PVC for durability</li><li style='margin-bottom: 0.5rem;'>Compatible for kids</li></ul><h3 style='font-size: 1.25rem; font-weight: 600; margin-bottom: 0.75rem;'>SIZE GUIDE</h3><p style='margin-bottom: 0.75rem;'>All of our ropes are 3.3 meters long and are length adjustable. To size your rope follow these steps.</p><ol style='list-style: decimal; padding-left: 1.5rem;'><li style='margin-bottom: 0.5rem;'>Step on the middle of the rope.</li><li style='margin-bottom: 0.5rem;'>Pull both of the handles pointing upwards.</li><li style='margin-bottom: 0.5rem;'>The end of both handles should reach anywhere between lower chest and middle chest.</li></ol>",
+    "highlights": [
+      "Distinctive dotted pattern design",
+      "Weighted cable for better control",
+      "Enhanced visibility during workouts",
+      "Professional-grade ball bearings",
+      "Ideal for CrossFit and HIIT"
+    ],
+    "popular": false
+  },
+  "combo-package": {
+    "id": "combo-package",
+    "name": "Combo Package",
+    "originalPrice": "$27.99",
+    "price": "$24.99",
+    "image": "📦",
+    "listImage": "combo-package-img.jpeg",
+    "detailsImage": "combo-package-details-img.jpeg",
+    "detailsImages": ["combo-package-details-img.jpeg"],
+    "features": [
+      "Both Ropes Included",
+      "Save $3",
+      "Complete Training Set",
+      "Best Value"
+    ],
+    "description": "Get both the Nova White and Aether ropes in one package. Perfect for variety in your training routine, this combo gives you everything you need to progress from beginner to advanced levels. Switch between styles based on your workout intensity and goals.",
+    "highlights": [
+      "Includes Nova White + Aether ropes",
+      "Save $3 with bundle discount",
+      "Versatile training options",
+      "Complete beginner to pro set",
+      "Best value for serious athletes"
+    ],
+    "popular": true
+  }
+}

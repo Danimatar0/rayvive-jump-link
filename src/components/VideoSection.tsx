@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Play } from "lucide-react";
+import rayvive_in_action_mp4 from "@/assets/rayvive-in-action.mp4";
 
 const VideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -65,10 +66,10 @@ const VideoSection = () => {
                 loop
                 muted
                 playsInline
+                preload="auto"
                 poster="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&h=675&fit=crop"
               >
-                {/* Add your video source here */}
-                <source src="/path-to-your-video.mp4" type="video/mp4" />
+                <source src={rayvive_in_action_mp4} type="video/mp4" />
                 Your browser does not support the video tag.
               </video>
               
@@ -86,12 +87,12 @@ const VideoSection = () => {
             <div className="absolute -inset-1 bg-gradient-to-r from-primary via-accent to-primary opacity-20 blur-xl group-hover:opacity-30 transition-opacity -z-10" />
           </div>
 
-          {/* Video description */}
+          {/* Video description
           <div className="text-center mt-8 text-muted-foreground">
             <p className="text-sm">
               🎥 Video automatically plays when you scroll to it
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </section>

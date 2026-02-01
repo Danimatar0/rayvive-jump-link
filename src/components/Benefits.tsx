@@ -1,15 +1,30 @@
-import { 
-  Heart, 
-  Zap, 
-  Target, 
-  Clock, 
-  TrendingUp, 
+import {
+  Heart,
+  Zap,
+  Target,
+  Clock,
+  TrendingUp,
   Users,
   CheckCircle,
-  ArrowRight 
+  ArrowRight
 } from "lucide-react";
+import { openWhatsApp } from "@/lib/whatsapp";
 
 const Benefits = () => {
+  const handleTransformationClick = () => {
+    const message = `🚀 I'm ready to transform my fitness journey with Rayvive jump ropes!
+
+💪 I just learned that jump ropes can burn up to 1000 calories per hour - that's incredible!
+
+I'd love to get:
+✅ Personalized rope recommendations
+✅ Expert workout tips to get started
+
+Let's make fitness fun and effective together! When can we chat about the perfect rope for my goals? 🎯`;
+
+    openWhatsApp(message);
+  };
+
   const benefits = [
     {
       icon: Heart,
@@ -115,15 +130,14 @@ const Benefits = () => {
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
             <div className="flex items-center gap-2 text-lg">
               <CheckCircle className="w-6 h-6" />
-              <span>30-Day Money Back Guarantee</span>
-            </div>
-            <div className="flex items-center gap-2 text-lg">
-              <CheckCircle className="w-6 h-6" />
-              <span>Free Shipping & Support</span>
+              <span>Free consultations</span>
             </div>
           </div>
           
-          <button className="btn-hero bg-white text-primary hover:bg-white/90 mt-8 group">
+          <button
+            onClick={handleTransformationClick}
+            className="btn-hero bg-white text-primary hover:bg-white/90 mt-8 group flex items-center gap-3 mx-auto"
+          >
             <span>Start Your Transformation</span>
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
