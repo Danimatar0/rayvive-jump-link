@@ -161,18 +161,35 @@ const ProductDetails = () => {
               </div>
 
               {/* Purchase Button */}
-              <button
-                onClick={handlePurchaseClick}
-                className="btn-energy w-full flex items-center justify-center gap-3 text-lg py-4"
-              >
-                <MessageCircle className="w-6 h-6" />
-                <span>Order Now</span>
-                <ExternalLink className="w-5 h-5" />
-              </button>
+              {product.soldOut ? (
+                <>
+                  <button
+                    disabled
+                    aria-disabled="true"
+                    className="w-full flex items-center justify-center gap-3 text-lg py-4 rounded-2xl font-semibold bg-muted text-muted-foreground cursor-not-allowed"
+                  >
+                    <span>Sold Out</span>
+                  </button>
+                  <p className="text-center text-sm text-muted-foreground mt-3">
+                    This product is currently unavailable
+                  </p>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={handlePurchaseClick}
+                    className="btn-energy w-full flex items-center justify-center gap-3 text-lg py-4"
+                  >
+                    <MessageCircle className="w-6 h-6" />
+                    <span>Order Now</span>
+                    <ExternalLink className="w-5 h-5" />
+                  </button>
 
-              <p className="text-center text-sm text-muted-foreground mt-3">
-                Secure ordering via WhatsApp Business
-              </p>
+                  <p className="text-center text-sm text-muted-foreground mt-3">
+                    Secure ordering via WhatsApp Business
+                  </p>
+                </>
+              )}
             </div>
 
             {/* Description & Highlights */}
