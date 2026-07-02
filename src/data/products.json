@@ -23,7 +23,8 @@
       "Smooth 360° rotation",
       "Perfect for cardio and endurance"
     ],
-    "popular": false
+    "popular": false,
+    "soldOut": true
   },
   "aether": {
     "id": "aether",
@@ -73,6 +74,7 @@
       "Complete beginner to pro set",
       "Best value for serious athletes"
     ],
-    "popular": true
+    "popular": true,
+    "soldOut": true
   }
 }
