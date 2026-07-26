@@ -10,7 +10,7 @@ import novaWhiteComparison from "@/assets/nova-white-comparison.jpg";
 import aetherDottedDetailsImg from "@/assets/aether-dotted-details-img.jpeg";
 import beadedRopeAetherImg from "@/assets/beaded-rope-aether-img.jpg";
 import aetherComparison from "@/assets/aether-comparison.jpg";
-import comboPackageDetailsImg from "@/assets/combo-package-details-img.jpeg";
+import comboPackageDetailsImg from "@/assets/combo-package-visual.png";
 import flareImg from "@/assets/flare-red-img.jpg";
 import umbraImg from "@/assets/umbra-black-img.jpg";
 import nocturneImg from "@/assets/nocturne-black-img.jpg";
@@ -46,7 +46,7 @@ const ProductDetails = () => {
       "aether-dotted-details-img.jpeg": aetherDottedDetailsImg,
       "beaded-rope-aether-img.jpg": beadedRopeAetherImg,
       "aether-comparison.jpg": aetherComparison,
-      "combo-package-details-img.jpeg": comboPackageDetailsImg,
+      "combo-package-visual.png": comboPackageDetailsImg,
       "flare-red-img.jpg": flareImg,
       "umbra-black-img.jpg": umbraImg,
       "nocturne-black-img.jpg": nocturneImg,

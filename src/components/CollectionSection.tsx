@@ -4,7 +4,7 @@ import { Star } from "lucide-react";
 import productsData from "../data/products.json";
 import novaWhiteImg from "../assets/nova-white-img.jpeg";
 import aetherDottedImg from "../assets/aether-dotted-img.jpeg";
-import comboPackageImg from "../assets/combo-package-img.jpeg";
+import comboPackageImg from "../assets/combo-package-visual.png";
 import flareImg from "../assets/flare-red-img.jpg";
 import umbraImg from "../assets/umbra-black-img.jpg";
 import nocturneImg from "../assets/nocturne-black-img.jpg";
@@ -32,7 +32,7 @@ const CollectionSection = () => {
     const imageMap: Record<string, string> = {
       "nova-white-img.jpeg": novaWhiteImg,
       "aether-dotted-img.jpeg": aetherDottedImg,
-      "combo-package-img.jpeg": comboPackageImg,
+      "combo-package-visual.png": comboPackageImg,
       "flare-red-img.jpg": flareImg,
       "umbra-black-img.jpg": umbraImg,
       "nocturne-black-img.jpg": nocturneImg,

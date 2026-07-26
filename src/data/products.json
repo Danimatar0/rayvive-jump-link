@@ -155,9 +155,8 @@
     "originalPrice": "$37",
     "price": "$33.99",
     "image": "📦",
-    "listImage": "combo-package-img.jpeg",
-    "detailsImage": "combo-package-details-img.jpeg",
-    "detailsImages": ["combo-package-details-img.jpeg"],
+    "listImage": "combo-package-visual.png",
+    "detailsImage": "combo-package-visual.png",
     "features": [
       "Both Rope Styles Included",
       "Choose Your Colors",
