@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
 import productsData from "../data/products.json";
@@ -5,10 +6,23 @@ import novaWhiteImg from "../assets/nova-white-img.jpeg";
 import aetherDottedImg from "../assets/aether-dotted-img.jpeg";
 import comboPackageImg from "../assets/combo-package-img.jpeg";
 
+const CATEGORIES = [
+  { id: "all", label: "All Ropes" },
+  { id: "speed", label: "Speed Ropes" },
+  { id: "beaded", label: "Beaded Ropes" },
+];
+
 const CollectionSection = () => {
   const navigate = useNavigate();
+  const [activeCategory, setActiveCategory] = useState("all");
 
-  const products = Object.values(productsData);
+  const allProducts = Object.values(productsData);
+
+  const products = allProducts.filter((product) => {
+    if (activeCategory === "all") return true;
+    const cats = ((product as { categories?: string[] }).categories) ?? [];
+    return cats.some((c) => c === activeCategory);
+  });
 
   const getProductImage = (imageFileName: string) => {
     const imageMap: Record<string, string> = {
@@ -23,7 +37,7 @@ const CollectionSection = () => {
     <section id="collection" className="py-24 bg-muted/30 scroll-mt-20">
       <div className="container mx-auto px-6">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
+        <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-5xl font-bold text-foreground mb-6">
             Our <span className="text-primary">Collection</span>
           </h2>
@@ -32,8 +46,30 @@ const CollectionSection = () => {
           </p>
         </div>
 
+        {/* Category Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-3 mb-16 animate-fade-in">
+          {CATEGORIES.map((category) => (
+            <button
+              key={category.id}
+              onClick={() => setActiveCategory(category.id)}
+              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
+                activeCategory === category.id
+                  ? "bg-primary text-primary-foreground shadow-[var(--glow-shadow)]"
+                  : "bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground"
+              }`}
+            >
+              {category.label}
+            </button>
+          ))}
+        </div>
+
         {/* Products Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {products.length === 0 ? (
+          <p className="text-center text-lg text-muted-foreground">
+            New ropes coming soon to this collection.
+          </p>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {products.map((product) => (
             <div
               key={product.id}
@@ -115,7 +151,8 @@ const CollectionSection = () => {
               )}
             </div>
           ))}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );
