@@ -5,6 +5,10 @@ import productsData from "../data/products.json";
 import novaWhiteImg from "../assets/nova-white-img.jpeg";
 import aetherDottedImg from "../assets/aether-dotted-img.jpeg";
 import comboPackageImg from "../assets/combo-package-img.jpeg";
+import flareImg from "../assets/flare-red-img.jpg";
+import umbraImg from "../assets/umbra-black-img.jpg";
+import nocturneImg from "../assets/nocturne-black-img.jpg";
+import vesperImg from "../assets/vesper-blue-img.jpeg";
 
 const CATEGORIES = [
   { id: "all", label: "All Ropes" },
@@ -29,6 +33,10 @@ const CollectionSection = () => {
       "nova-white-img.jpeg": novaWhiteImg,
       "aether-dotted-img.jpeg": aetherDottedImg,
       "combo-package-img.jpeg": comboPackageImg,
+      "flare-red-img.jpg": flareImg,
+      "umbra-black-img.jpg": umbraImg,
+      "nocturne-black-img.jpg": nocturneImg,
+      "vesper-blue-img.jpeg": vesperImg,
     };
     return imageMap[imageFileName];
   };
