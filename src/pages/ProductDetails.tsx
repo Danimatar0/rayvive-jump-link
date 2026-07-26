@@ -11,12 +11,21 @@ import aetherDottedDetailsImg from "@/assets/aether-dotted-details-img.jpeg";
 import beadedRopeAetherImg from "@/assets/beaded-rope-aether-img.jpg";
 import aetherComparison from "@/assets/aether-comparison.jpg";
 import comboPackageDetailsImg from "@/assets/combo-package-details-img.jpeg";
+import flareImg from "@/assets/flare-red-img.jpg";
+import umbraImg from "@/assets/umbra-black-img.jpg";
+import nocturneImg from "@/assets/nocturne-black-img.jpg";
+import vesperImg from "@/assets/vesper-blue-img.jpeg";
+
+type ComboOption = { id: string; label: string; swatchClass: string };
+type ComboOptions = { speed: ComboOption[]; beaded: ComboOption[] };
 
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [selectedSpeedColor, setSelectedSpeedColor] = useState<string | null>(null);
+  const [selectedBeadedColor, setSelectedBeadedColor] = useState<string | null>(null);
 
   const product = productsData[productId as keyof typeof productsData];
 
@@ -24,6 +33,10 @@ const ProductDetails = () => {
     navigate("/");
     return null;
   }
+
+  const comboOptions = (product as { comboOptions?: ComboOptions }).comboOptions;
+  const isCombo = Boolean(comboOptions);
+  const comboSelectionIncomplete = isCombo && (!selectedSpeedColor || !selectedBeadedColor);
 
   const getProductDetailsImage = (imageFileName: string) => {
     const imageMap: Record<string, string> = {
@@ -34,6 +47,10 @@ const ProductDetails = () => {
       "beaded-rope-aether-img.jpg": beadedRopeAetherImg,
       "aether-comparison.jpg": aetherComparison,
       "combo-package-details-img.jpeg": comboPackageDetailsImg,
+      "flare-red-img.jpg": flareImg,
+      "umbra-black-img.jpg": umbraImg,
+      "nocturne-black-img.jpg": nocturneImg,
+      "vesper-blue-img.jpeg": vesperImg,
     };
     return imageMap[imageFileName];
   };
@@ -54,7 +71,13 @@ const ProductDetails = () => {
   };
 
   const handleConfirmPurchase = () => {
-    const message = `Hi! I'm interested in purchasing the ${product.name} for ${product.price}. Could you please assist me with the order?`;
+    let productLabel = product.name;
+    if (isCombo && comboOptions && selectedSpeedColor && selectedBeadedColor) {
+      const speedLabel = comboOptions.speed.find((o) => o.id === selectedSpeedColor)?.label;
+      const beadedLabel = comboOptions.beaded.find((o) => o.id === selectedBeadedColor)?.label;
+      productLabel = `${product.name} (${speedLabel} + ${beadedLabel})`;
+    }
+    const message = `Hi! I'm interested in purchasing the ${productLabel} for ${product.price}. Could you please assist me with the order?`;
     const whatsappUrl = createWhatsAppLink(message);
     window.open(whatsappUrl, '_blank');
   };
@@ -142,7 +165,7 @@ const ProductDetails = () => {
               <h1 className="text-4xl font-bold text-foreground mb-4">{product.name}</h1>
               
               <div className="mb-8">
-                {product.price && (
+                {product.originalPrice && (
                   <div className="text-xl text-muted-foreground line-through mb-2">
                     {product.originalPrice}
                   </div>
@@ -159,6 +182,53 @@ const ProductDetails = () => {
                   </div>
                 ))}
               </div>
+
+              {/* Combo Color Picker */}
+              {isCombo && comboOptions && !product.soldOut && (
+                <div className="mb-8 text-left space-y-6">
+                  <div>
+                    <div className="text-sm font-semibold text-foreground mb-3">Choose Speed Rope Color</div>
+                    <div className="grid grid-cols-3 gap-3">
+                      {comboOptions.speed.map((option) => (
+                        <button
+                          key={option.id}
+                          type="button"
+                          onClick={() => setSelectedSpeedColor(option.id)}
+                          className={`p-3 rounded-2xl border-2 transition-all hover:scale-105 ${
+                            selectedSpeedColor === option.id ? 'border-primary bg-primary/5' : 'border-border'
+                          }`}
+                        >
+                          <div className={`w-8 h-8 rounded-full mx-auto mb-2 ${option.swatchClass}`} />
+                          <div className="text-xs font-medium text-foreground text-center">{option.label}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold text-foreground mb-3">Choose Beaded Rope Color</div>
+                    <div className="grid grid-cols-3 gap-3">
+                      {comboOptions.beaded.map((option) => (
+                        <button
+                          key={option.id}
+                          type="button"
+                          onClick={() => setSelectedBeadedColor(option.id)}
+                          className={`p-3 rounded-2xl border-2 transition-all hover:scale-105 ${
+                            selectedBeadedColor === option.id ? 'border-primary bg-primary/5' : 'border-border'
+                          }`}
+                        >
+                          <div className={`w-8 h-8 rounded-full mx-auto mb-2 ${option.swatchClass}`} />
+                          <div className="text-xs font-medium text-foreground text-center">{option.label}</div>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  {comboSelectionIncomplete && (
+                    <p className="text-xs text-muted-foreground">
+                      Select a speed rope color and a beaded rope color to continue.
+                    </p>
+                  )}
+                </div>
+              )}
 
               {/* Purchase Button */}
               {product.soldOut ? (
@@ -178,7 +248,10 @@ const ProductDetails = () => {
                 <>
                   <button
                     onClick={handlePurchaseClick}
-                    className="btn-energy w-full flex items-center justify-center gap-3 text-lg py-4"
+                    disabled={comboSelectionIncomplete}
+                    className={`btn-energy w-full flex items-center justify-center gap-3 text-lg py-4 ${
+                      comboSelectionIncomplete ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''
+                    }`}
                   >
                     <MessageCircle className="w-6 h-6" />
                     <span>Order Now</span>
@@ -249,7 +322,12 @@ const ProductDetails = () => {
               </h3>
               <p className="text-muted-foreground">
                 You'll be redirected to WhatsApp to finalize your purchase of the{" "}
-                <span className="font-semibold text-foreground">{product.name}</span> for{" "}
+                <span className="font-semibold text-foreground">
+                  {product.name}
+                  {isCombo && comboOptions && selectedSpeedColor && selectedBeadedColor &&
+                    ` (${comboOptions.speed.find((o) => o.id === selectedSpeedColor)?.label} + ${comboOptions.beaded.find((o) => o.id === selectedBeadedColor)?.label})`}
+                </span>{" "}
+                for{" "}
                 <span className="font-semibold text-primary">{product.price}</span>.
               </p>
             </div>
