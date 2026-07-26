@@ -24,7 +24,8 @@
       "Perfect for cardio and endurance"
     ],
     "popular": false,
-    "soldOut": true
+    "soldOut": true,
+    "categories": ["speed"]
   },
   "aether": {
     "id": "aether",
@@ -49,7 +50,8 @@
       "Professional-grade ball bearings",
       "Ideal for CrossFit and HIIT"
     ],
-    "popular": false
+    "popular": false,
+    "categories": ["beaded"]
   },
   "combo-package": {
     "id": "combo-package",
@@ -75,6 +77,7 @@
       "Best value for serious athletes"
     ],
     "popular": true,
-    "soldOut": true
+    "soldOut": true,
+    "categories": ["speed", "beaded"]
   }
 }
