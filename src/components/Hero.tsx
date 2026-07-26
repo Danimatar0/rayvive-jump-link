@@ -1,6 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-jump-rope.jpg";
+import comboVisual from "@/assets/combo-package-visual.png";
 import { createWhatsAppLink } from "@/config/constants";
 
 const Hero = () => {
@@ -84,6 +85,23 @@ const Hero = () => {
             <div className="text-center">
               <div className="text-2xl font-bold text-white">24/7</div>
               <div className="text-sm">Customer Support</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Hero Visual Element */}
+        <div className="flex-1 lg:flex-none lg:w-96 flex justify-center">
+          <div className="relative">
+            <div className="w-80 h-80 lg:w-96 lg:h-96 rounded-full bg-gradient-to-br from-white/20 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center animate-float p-8">
+              <img
+                src={comboVisual}
+                alt="Rayvive Jump Rope Colors"
+                className="w-full h-full object-contain animate-bounce-in"
+              />
+            </div>
+            {/* Floating Elements */}
+            <div className="absolute -top-4 -right-4 w-16 h-16 bg-accent rounded-full flex items-center justify-center text-white font-bold text-lg animate-pulse-glow">
+              NEW
             </div>
           </div>
         </div>
