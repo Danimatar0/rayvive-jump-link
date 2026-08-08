@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
 import productsData from "../data/products.json";
-import novaWhiteImg from "../assets/nova-white-img.jpeg";
+import novaWhiteImg from "../assets/nova-white-img.png";
 import aetherDottedImg from "../assets/aether-dotted-img.jpeg";
 import comboPackageImg from "../assets/combo-package-visual.png";
 import flareImg from "../assets/flare-red-img.jpg";
@@ -30,7 +30,7 @@ const CollectionSection = () => {
 
   const getProductImage = (imageFileName: string) => {
     const imageMap: Record<string, string> = {
-      "nova-white-img.jpeg": novaWhiteImg,
+      "nova-white-img.png": novaWhiteImg,
       "aether-dotted-img.jpeg": aetherDottedImg,
       "combo-package-visual.png": comboPackageImg,
       "flare-red-img.jpg": flareImg,
