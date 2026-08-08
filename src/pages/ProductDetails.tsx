@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import { createWhatsAppLink } from "@/config/constants";
 import { useState } from "react";
 import productsData from "@/data/products.json";
-import novaWhiteImg from "@/assets/nova-white-img.jpeg";
+import novaWhiteImg from "@/assets/nova-white-img.png";
 import speedRopeNovaImg from "@/assets/speed-rope-nova-img.jpg";
 import novaWhiteComparison from "@/assets/nova-white-comparison.jpg";
 import aetherDottedDetailsImg from "@/assets/aether-dotted-details-img.jpeg";
@@ -40,7 +40,7 @@ const ProductDetails = () => {
 
   const getProductDetailsImage = (imageFileName: string) => {
     const imageMap: Record<string, string> = {
-      "nova-white-img.jpeg": novaWhiteImg,
+      "nova-white-img.png": novaWhiteImg,
       "speed-rope-nova-img.jpg": speedRopeNovaImg,
       "nova-white-comparison.jpg": novaWhiteComparison,
       "aether-dotted-details-img.jpeg": aetherDottedDetailsImg,
