@@ -4,9 +4,9 @@
     "name": "Nova White",
     "price": "$16.99",
     "image": "🤍",
-    "listImage": "nova-white-img.jpeg",
-    "detailsImage": "nova-white-img.jpeg",
-    "detailsImages": ["nova-white-img.jpeg", "speed-rope-nova-img.jpg", "nova-white-comparison.jpg"],
+    "listImage": "nova-white-img.png",
+    "detailsImage": "nova-white-img.png",
+    "detailsImages": ["nova-white-img.png", "speed-rope-nova-img.jpg", "nova-white-comparison.jpg"],
     "features": [
       "Premium White Design",
       "Adjustable Length",
