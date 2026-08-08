@@ -66,7 +66,7 @@ const Hero = () => {
                 const element = document.getElementById('collection');
                 element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
-              className="btn-secondary bg-white/20 backdrop-blur-sm text-white hover:bg-white/30 border border-white/30"
+              className="btn-energy"
             >
               View Collection
             </button>
