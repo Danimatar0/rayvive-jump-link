@@ -3,12 +3,14 @@ import { useNavigate } from "react-router-dom";
 import heroImage from "@/assets/hero-jump-rope.jpg";
 import comboVisual from "@/assets/combo-package-visual.png";
 import { createWhatsAppLink } from "@/config/constants";
+import { trackPixelEvent } from "@/lib/metaPixel";
 
 const Hero = () => {
   const navigate = useNavigate();
 
   const handleWhatsAppClick = () => {
     const message = "Hi! I'd like to start my fitness transformation with Rayvive jump ropes. Can you help me choose the right rope?";
+    trackPixelEvent('Contact', { content_name: 'Hero CTA' });
     const whatsappUrl = createWhatsAppLink(message);
     window.open(whatsappUrl, '_blank');
   };

@@ -9,16 +9,19 @@ import {
   Heart
 } from "lucide-react";
 import { createWhatsAppLink } from "@/config/constants";
+import { trackPixelEvent } from "@/lib/metaPixel";
 
 const Footer = () => {
   const handleWhatsAppClick = () => {
     const message = "Hi! I have a question about Rayvive jump ropes. Can you help me?";
+    trackPixelEvent('Contact', { content_name: 'Footer Contact' });
     const whatsappUrl = createWhatsAppLink(message);
     window.open(whatsappUrl, '_blank');
   };
 
   const handleWorkoutTipsClick = () => {
     const message = "Hi! I need workout tips about jump ropes. Can you help me with training advice?";
+    trackPixelEvent('Contact', { content_name: 'Footer Workout Tips' });
     const whatsappUrl = createWhatsAppLink(message);
     window.open(whatsappUrl, '_blank');
   };

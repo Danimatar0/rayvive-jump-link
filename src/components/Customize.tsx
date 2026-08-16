@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Palette, Ruler, Grip, Sparkles, CheckCircle, MessageCircle } from "lucide-react";
 import { openWhatsApp, WhatsAppMessages } from "@/lib/whatsapp";
+import { trackPixelEvent } from "@/lib/metaPixel";
 
 const Customize = () => {
   const [selectedColor, setSelectedColor] = useState("black");
@@ -40,6 +41,12 @@ const Customize = () => {
       handles.find(h => h.id === selectedHandle)?.name || '',
       `$${totalPrice.toFixed(2)}`
     );
+
+    trackPixelEvent('Lead', {
+      content_name: 'Custom Jump Rope',
+      value: totalPrice,
+      currency: 'USD'
+    });
 
     openWhatsApp(orderDetails);
   };
