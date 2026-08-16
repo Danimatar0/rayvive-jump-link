@@ -12,13 +12,17 @@ declare global {
 
 /**
  * Standard Meta events used on this site:
+ * - PageView: re-fired on client-side route changes (index.html covers first load)
+ * - ViewContent: visitor opens a product page — builds retargeting audiences
  * - Contact: visitor opens WhatsApp with a question
  * - Lead: visitor opens WhatsApp with order intent
  */
-type PixelEvent = 'Contact' | 'Lead';
+type PixelEvent = 'PageView' | 'ViewContent' | 'Contact' | 'Lead';
 
 interface PixelEventParams {
   content_name?: string;
+  content_ids?: string[];
+  content_type?: 'product';
   value?: number;
   currency?: string;
 }

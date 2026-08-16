@@ -3,7 +3,7 @@ import { ArrowLeft, Star, CheckCircle, MessageCircle, ExternalLink, ChevronLeft,
 import Footer from "@/components/Footer";
 import { createWhatsAppLink } from "@/config/constants";
 import { trackPixelEvent, parsePrice } from "@/lib/metaPixel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import productsData from "@/data/products.json";
 import novaWhiteImg from "@/assets/nova-white-img.png";
 import speedRopeNovaImg from "@/assets/speed-rope-nova-img.jpg";
@@ -29,6 +29,19 @@ const ProductDetails = () => {
   const [selectedBeadedColor, setSelectedBeadedColor] = useState<string | null>(null);
 
   const product = productsData[productId as keyof typeof productsData];
+
+  // Meta Pixel: product views are what Ads Manager builds retargeting audiences from
+  useEffect(() => {
+    if (!product) return;
+
+    trackPixelEvent('ViewContent', {
+      content_name: product.name,
+      content_ids: [productId as string],
+      content_type: 'product',
+      value: parsePrice(product.price),
+      currency: 'USD'
+    });
+  }, [productId, product]);
 
   if (!product) {
     navigate("/");

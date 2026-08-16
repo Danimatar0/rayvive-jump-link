@@ -6,7 +6,11 @@
     <script type="text/javascript">
       // Single Page Apps for GitHub Pages
       // https://github.com/rafgraph/spa-github-pages
-      var pathSegmentsToKeep = 1;
+      // 0 because the site is served from the domain root (rayvive.fit), not a
+      // /repo-name/ subpath. With 1 the first path segment was kept as if it
+      // were a project prefix, so /product/nova-white redirected to /product/
+      // — which 404s again and re-enters this script, looping.
+      var pathSegmentsToKeep = 0;
       var l = window.location;
       l.replace(
         l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
