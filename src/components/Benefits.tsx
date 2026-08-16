@@ -9,6 +9,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { openWhatsApp } from "@/lib/whatsapp";
+import { trackPixelEvent } from "@/lib/metaPixel";
 
 const Benefits = () => {
   const handleTransformationClick = () => {
@@ -22,6 +23,7 @@ I'd love to get:
 
 Let's make fitness fun and effective together! When can we chat about the perfect rope for my goals? 🎯`;
 
+    trackPixelEvent('Contact', { content_name: 'Benefits CTA' });
     openWhatsApp(message);
   };
 

@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { ArrowLeft, Star, CheckCircle, MessageCircle, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import Footer from "@/components/Footer";
 import { createWhatsAppLink } from "@/config/constants";
+import { trackPixelEvent, parsePrice } from "@/lib/metaPixel";
 import { useState } from "react";
 import productsData from "@/data/products.json";
 import novaWhiteImg from "@/assets/nova-white-img.png";
@@ -78,6 +79,13 @@ const ProductDetails = () => {
       productLabel = `${product.name} (${speedLabel} + ${beadedLabel})`;
     }
     const message = `Hi! I'm interested in purchasing the ${productLabel} for ${product.price}. Could you please assist me with the order?`;
+
+    trackPixelEvent('Lead', {
+      content_name: productLabel,
+      value: parsePrice(product.price),
+      currency: 'USD'
+    });
+
     const whatsappUrl = createWhatsAppLink(message);
     window.open(whatsappUrl, '_blank');
   };
