@@ -12,12 +12,15 @@ declare global {
 
 /**
  * Standard Meta events used on this site:
- * - PageView: re-fired on client-side route changes (index.html covers first load)
  * - ViewContent: visitor opens a product page — builds retargeting audiences
  * - Contact: visitor opens WhatsApp with a question
  * - Lead: visitor opens WhatsApp with order intent
+ *
+ * PageView is deliberately absent: the base pixel covers the first load, and
+ * fbevents auto-fires PageView on History API changes, so React Router
+ * navigations are already tracked. Firing it here double-counted them.
  */
-type PixelEvent = 'PageView' | 'ViewContent' | 'Contact' | 'Lead';
+type PixelEvent = 'ViewContent' | 'Contact' | 'Lead';
 
 interface PixelEventParams {
   content_name?: string;
