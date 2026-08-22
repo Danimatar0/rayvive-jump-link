@@ -53,24 +53,24 @@ const Hero = () => {
             Discover the perfect blend of quality, performance, and style. Our expertly crafted jump ropes are designed to elevate your fitness journey and help you achieve your goals.
           </p>
 
-          {/* CTA Buttons */}
+          {/* CTA Buttons — shopping is the primary path; WhatsApp is support */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start">
             <button
-              onClick={handleWhatsAppClick}
-              className="btn-hero flex items-center justify-center gap-3 group"
-            >
-              <span>Start Your Transformation</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-            
-            <button 
               onClick={() => {
                 const element = document.getElementById('collection');
                 element?.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }}
-              className="btn-energy"
+              className="btn-hero flex items-center justify-center gap-3 group"
             >
-              View Collection
+              <span>Shop the Collection</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </button>
+
+            <button
+              onClick={handleWhatsAppClick}
+              className="px-8 py-4 rounded-2xl font-semibold text-white border-2 border-white/40 hover:bg-white/10 transition-all duration-300"
+            >
+              Ask us a question
             </button>
           </div>
 
