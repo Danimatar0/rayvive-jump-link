@@ -1,107 +1,166 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { ArrowLeft, Star, CheckCircle, MessageCircle, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import {
+  ArrowLeft,
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
+  MessageCircle,
+  Minus,
+  Plus,
+  ShoppingCart,
+  Star,
+  Truck,
+  Zap,
+} from "lucide-react";
 import Footer from "@/components/Footer";
 import { createWhatsAppLink } from "@/config/constants";
-import { trackPixelEvent, parsePrice } from "@/lib/metaPixel";
-import { useEffect, useState } from "react";
-import productsData from "@/data/products.json";
-import novaWhiteImg from "@/assets/nova-white-img.png";
-import speedRopeNovaImg from "@/assets/speed-rope-nova-img.jpg";
-import novaWhiteComparison from "@/assets/nova-white-comparison.jpg";
-import aetherDottedDetailsImg from "@/assets/aether-dotted-details-img.jpeg";
-import beadedRopeAetherImg from "@/assets/beaded-rope-aether-img.jpg";
-import aetherComparison from "@/assets/aether-comparison.jpg";
-import comboPackageDetailsImg from "@/assets/combo-package-visual.png";
-import flareImg from "@/assets/flare-red-img.jpg";
-import umbraImg from "@/assets/umbra-black-img.jpg";
-import nocturneImg from "@/assets/nocturne-black-img.jpg";
-import vesperImg from "@/assets/vesper-blue-img.jpeg";
-
-type ComboOption = { id: string; label: string; swatchClass: string };
-type ComboOptions = { speed: ComboOption[]; beaded: ComboOption[] };
+import { trackPixelEvent } from "@/lib/metaPixel";
+import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/context/CartContext";
+import {
+  describeVariant,
+  getProduct,
+  isPurchasable,
+  isVariantSelectionComplete,
+  maxQuantityFor,
+  type VariantSelection,
+} from "@/lib/catalog";
+import { STORE, formatMoney } from "@/config/commerce";
+import { shippingSummaryLabel } from "@/lib/shipping";
+import {
+  clearProductStructuredData,
+  setCanonical,
+  setDocumentTitle,
+  setMetaDescription,
+  setProductStructuredData,
+  toPlainText,
+} from "@/lib/seo";
 
 const ProductDetails = () => {
   const navigate = useNavigate();
   const { productId } = useParams();
-  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const { toast } = useToast();
+  const { addItem } = useCart();
+
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedSpeedColor, setSelectedSpeedColor] = useState<string | null>(null);
-  const [selectedBeadedColor, setSelectedBeadedColor] = useState<string | null>(null);
+  const [variant, setVariant] = useState<VariantSelection>({});
+  const [quantity, setQuantity] = useState(1);
 
-  const product = productsData[productId as keyof typeof productsData];
+  const product = getProduct(productId);
+  const viewContentFiredRef = useRef<string | null>(null);
 
-  // Meta Pixel: product views are what Ads Manager builds retargeting audiences from
+  // Meta Pixel: product views are what Ads Manager builds retargeting audiences
+  // from. The ref keys on the product id so switching products fires again,
+  // but re-renders (choosing a colour, changing quantity) do not.
+  useEffect(() => {
+    if (!product || viewContentFiredRef.current === product.id) return;
+    viewContentFiredRef.current = product.id;
+
+    trackPixelEvent("ViewContent", {
+      content_name: product.name,
+      content_ids: [product.id],
+      content_type: "product",
+      value: product.price,
+      currency: STORE.currency,
+    });
+  }, [product]);
+
+  // Per-product SEO: title, description, canonical and Product structured data.
   useEffect(() => {
     if (!product) return;
 
-    trackPixelEvent('ViewContent', {
-      content_name: product.name,
-      content_ids: [productId as string],
-      content_type: 'product',
-      value: parsePrice(product.price),
-      currency: 'USD'
+    setDocumentTitle(`${product.name} — Rayvive Jump Ropes`);
+    setMetaDescription(toPlainText(product.description));
+    setCanonical(product.url);
+    setProductStructuredData({
+      id: product.id,
+      name: product.name,
+      description: toPlainText(product.description, 300),
+      image: product.images[0] ?? product.listImage,
+      price: product.price,
+      currency: product.currency,
+      inStock: isPurchasable(product),
+      path: product.url,
     });
-  }, [productId, product]);
 
-  if (!product) {
-    navigate("/");
-    return null;
-  }
+    return () => clearProductStructuredData();
+  }, [product]);
 
-  const comboOptions = (product as { comboOptions?: ComboOptions }).comboOptions;
-  const isCombo = Boolean(comboOptions);
-  const comboSelectionIncomplete = isCombo && (!selectedSpeedColor || !selectedBeadedColor);
+  // Reset selections when navigating between products.
+  useEffect(() => {
+    setVariant({});
+    setQuantity(1);
+    setCurrentImageIndex(0);
+  }, [productId]);
 
-  const getProductDetailsImage = (imageFileName: string) => {
-    const imageMap: Record<string, string> = {
-      "nova-white-img.png": novaWhiteImg,
-      "speed-rope-nova-img.jpg": speedRopeNovaImg,
-      "nova-white-comparison.jpg": novaWhiteComparison,
-      "aether-dotted-details-img.jpeg": aetherDottedDetailsImg,
-      "beaded-rope-aether-img.jpg": beadedRopeAetherImg,
-      "aether-comparison.jpg": aetherComparison,
-      "combo-package-visual.png": comboPackageDetailsImg,
-      "flare-red-img.jpg": flareImg,
-      "umbra-black-img.jpg": umbraImg,
-      "nocturne-black-img.jpg": nocturneImg,
-      "vesper-blue-img.jpeg": vesperImg,
-    };
-    return imageMap[imageFileName];
-  };
+  useEffect(() => {
+    if (!product) navigate("/", { replace: true });
+  }, [product, navigate]);
 
-  const productImages = product.detailsImages || [product.detailsImage];
+  if (!product) return null;
+
+  const available = isPurchasable(product);
+  const maxQuantity = maxQuantityFor(product);
+  const hasVariants = product.variantGroups.length > 0;
+  const variantsIncomplete = hasVariants && !isVariantSelectionComplete(product, variant);
+  const canPurchase = available && !variantsIncomplete;
+
+  const productImages = product.images;
   const hasMultipleImages = productImages.length > 1;
 
-  const nextImage = () => {
+  const nextImage = () =>
     setCurrentImageIndex((prev) => (prev + 1) % productImages.length);
-  };
-
-  const prevImage = () => {
+  const prevImage = () =>
     setCurrentImageIndex((prev) => (prev - 1 + productImages.length) % productImages.length);
-  };
 
-  const handlePurchaseClick = () => {
-    setShowConfirmDialog(true);
-  };
+  /**
+   * Adds to the cart and fires AddToCart only on a successful add — a rejected
+   * add (sold out, over the per-line cap) must not report a conversion.
+   */
+  const handleAddToCart = (): boolean => {
+    const result = addItem(product, variant, quantity);
 
-  const handleConfirmPurchase = () => {
-    let productLabel = product.name;
-    if (isCombo && comboOptions && selectedSpeedColor && selectedBeadedColor) {
-      const speedLabel = comboOptions.speed.find((o) => o.id === selectedSpeedColor)?.label;
-      const beadedLabel = comboOptions.beaded.find((o) => o.id === selectedBeadedColor)?.label;
-      productLabel = `${product.name} (${speedLabel} + ${beadedLabel})`;
+    if (!result.ok) {
+      toast({
+        title: "Couldn't add to cart",
+        description: result.reason,
+        variant: "destructive",
+      });
+      return false;
     }
-    const message = `Hi! I'm interested in purchasing the ${productLabel} for ${product.price}. Could you please assist me with the order?`;
 
-    trackPixelEvent('Lead', {
-      content_name: productLabel,
-      value: parsePrice(product.price),
-      currency: 'USD'
+    trackPixelEvent("AddToCart", {
+      content_name: product.name,
+      content_ids: [product.id],
+      content_type: "product",
+      contents: [{ id: product.id, quantity, item_price: product.price }],
+      num_items: quantity,
+      value: product.price * quantity,
+      currency: STORE.currency,
     });
 
-    const whatsappUrl = createWhatsAppLink(message);
-    window.open(whatsappUrl, '_blank');
+    return true;
   };
+
+  const handleAddToCartClick = () => {
+    if (handleAddToCart()) {
+      const label = describeVariant(product, variant);
+      toast({
+        title: "Added to cart",
+        description: `${product.name}${label ? ` (${label})` : ""} × ${quantity}`,
+      });
+    }
+  };
+
+  /** Buy Now: same add, then straight to checkout to cut friction for ad traffic. */
+  const handleBuyNow = () => {
+    if (handleAddToCart()) navigate("/checkout");
+  };
+
+  const whatsappHref = createWhatsAppLink(
+    `Hi! I have a question about the ${product.name} jump rope.`
+  );
 
   return (
     <main className="min-h-screen bg-background">
@@ -112,10 +171,9 @@ const ProductDetails = () => {
             onClick={() => {
               navigate("/");
               setTimeout(() => {
-                const element = document.getElementById('collection');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                document
+                  .getElementById("collection")
+                  ?.scrollIntoView({ behavior: "smooth", block: "start" });
               }, 100);
             }}
             className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors"
@@ -130,21 +188,26 @@ const ProductDetails = () => {
       <section className="py-16">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Product Image & Info */}
-            <div className="bg-card rounded-3xl border p-12 text-center">
+            {/* Product Image & Purchase */}
+            <div className="bg-card rounded-3xl border p-6 sm:p-12 text-center">
               {/* Image Carousel */}
               <div className="relative mb-6">
                 {productImages[currentImageIndex] ? (
                   <img
-                    src={getProductDetailsImage(productImages[currentImageIndex])}
+                    src={productImages[currentImageIndex]}
                     alt={`${product.name} - Image ${currentImageIndex + 1}`}
-                    className="w-full h-96 object-contain rounded-2xl"
+                    className="w-full h-80 sm:h-96 object-contain rounded-2xl"
+                    width={600}
+                    height={384}
+                    // The first product image is the LCP element for ad traffic
+                    // landing straight here, so it must not be lazy-loaded.
+                    loading={currentImageIndex === 0 ? "eager" : "lazy"}
+                    decoding="async"
                   />
                 ) : (
-                  <div className="text-8xl mb-6 animate-bounce-in">{product.image}</div>
+                  <div className="text-8xl mb-6 animate-bounce-in">{product.emoji}</div>
                 )}
 
-                {/* Navigation Arrows */}
                 {hasMultipleImages && (
                   <>
                     <button
@@ -161,37 +224,38 @@ const ProductDetails = () => {
                     >
                       <ChevronRight className="w-6 h-6 text-foreground" />
                     </button>
-                  </>
-                )}
 
-                {/* Image Indicators */}
-                {hasMultipleImages && (
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                    {productImages.map((_, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setCurrentImageIndex(index)}
-                        className={`w-2 h-2 rounded-full transition-all ${
-                          index === currentImageIndex
-                            ? 'bg-primary w-6'
-                            : 'bg-background/60 hover:bg-background/80'
-                        }`}
-                        aria-label={`Go to image ${index + 1}`}
-                      />
-                    ))}
-                  </div>
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+                      {productImages.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setCurrentImageIndex(index)}
+                          className={`w-2 h-2 rounded-full transition-all ${
+                            index === currentImageIndex
+                              ? "bg-primary w-6"
+                              : "bg-background/60 hover:bg-background/80"
+                          }`}
+                          aria-label={`Go to image ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </>
                 )}
               </div>
 
-              <h1 className="text-4xl font-bold text-foreground mb-4">{product.name}</h1>
-              
+              <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+                {product.name}
+              </h1>
+
               <div className="mb-8">
                 {product.originalPrice && (
                   <div className="text-xl text-muted-foreground line-through mb-2">
-                    {product.originalPrice}
+                    {formatMoney(product.originalPrice)}
                   </div>
                 )}
-                <div className="text-5xl font-black text-primary">{product.price}</div>
+                <div className="text-5xl font-black text-primary">
+                  {formatMoney(product.price)}
+                </div>
               </div>
 
               {/* Quick Features */}
@@ -204,55 +268,51 @@ const ProductDetails = () => {
                 ))}
               </div>
 
-              {/* Combo Color Picker */}
-              {isCombo && comboOptions && !product.soldOut && (
+              {/* Variant pickers */}
+              {hasVariants && available && (
                 <div className="mb-8 text-left space-y-6">
-                  <div>
-                    <div className="text-sm font-semibold text-foreground mb-3">Choose Speed Rope Color</div>
-                    <div className="grid grid-cols-3 gap-3">
-                      {comboOptions.speed.map((option) => (
-                        <button
-                          key={option.id}
-                          type="button"
-                          onClick={() => setSelectedSpeedColor(option.id)}
-                          className={`p-3 rounded-2xl border-2 transition-all hover:scale-105 ${
-                            selectedSpeedColor === option.id ? 'border-primary bg-primary/5' : 'border-border'
-                          }`}
-                        >
-                          <div className={`w-8 h-8 rounded-full mx-auto mb-2 ${option.swatchClass}`} />
-                          <div className="text-xs font-medium text-foreground text-center">{option.label}</div>
-                        </button>
-                      ))}
+                  {product.variantGroups.map((group) => (
+                    <div key={group.id}>
+                      <div className="text-sm font-semibold text-foreground mb-3">
+                        {group.label}
+                      </div>
+                      <div className="grid grid-cols-3 gap-3">
+                        {group.options.map((option) => (
+                          <button
+                            key={option.id}
+                            type="button"
+                            onClick={() =>
+                              setVariant((prev) => ({ ...prev, [group.id]: option.id }))
+                            }
+                            aria-pressed={variant[group.id] === option.id}
+                            className={`p-3 rounded-2xl border-2 transition-all hover:scale-105 ${
+                              variant[group.id] === option.id
+                                ? "border-primary bg-primary/5"
+                                : "border-border"
+                            }`}
+                          >
+                            <div
+                              className={`w-8 h-8 rounded-full mx-auto mb-2 ${option.swatchClass ?? ""}`}
+                            />
+                            <div className="text-xs font-medium text-foreground text-center">
+                              {option.label}
+                            </div>
+                          </button>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <div>
-                    <div className="text-sm font-semibold text-foreground mb-3">Choose Beaded Rope Color</div>
-                    <div className="grid grid-cols-3 gap-3">
-                      {comboOptions.beaded.map((option) => (
-                        <button
-                          key={option.id}
-                          type="button"
-                          onClick={() => setSelectedBeadedColor(option.id)}
-                          className={`p-3 rounded-2xl border-2 transition-all hover:scale-105 ${
-                            selectedBeadedColor === option.id ? 'border-primary bg-primary/5' : 'border-border'
-                          }`}
-                        >
-                          <div className={`w-8 h-8 rounded-full mx-auto mb-2 ${option.swatchClass}`} />
-                          <div className="text-xs font-medium text-foreground text-center">{option.label}</div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                  {comboSelectionIncomplete && (
+                  ))}
+
+                  {variantsIncomplete && (
                     <p className="text-xs text-muted-foreground">
-                      Select a speed rope color and a beaded rope color to continue.
+                      Choose an option from each group to continue.
                     </p>
                   )}
                 </div>
               )}
 
-              {/* Purchase Button */}
-              {product.soldOut ? (
+              {/* Purchase */}
+              {!available ? (
                 <>
                   <button
                     disabled
@@ -266,35 +326,88 @@ const ProductDetails = () => {
                   </p>
                 </>
               ) : (
-                <>
+                <div className="space-y-4">
+                  {/* Quantity */}
+                  <div className="flex items-center justify-center gap-4">
+                    <span className="text-sm font-medium text-foreground">Quantity</span>
+                    <div className="flex items-center border border-border rounded-full">
+                      <button
+                        type="button"
+                        onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                        disabled={quantity <= 1}
+                        aria-label="Decrease quantity"
+                        className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <span className="w-10 text-center font-semibold tabular-nums">
+                        {quantity}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => setQuantity((q) => Math.min(maxQuantity, q + 1))}
+                        disabled={quantity >= maxQuantity}
+                        aria-label="Increase quantity"
+                        className="w-11 h-11 flex items-center justify-center rounded-full hover:bg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+
                   <button
-                    onClick={handlePurchaseClick}
-                    disabled={comboSelectionIncomplete}
+                    onClick={handleAddToCartClick}
+                    disabled={!canPurchase}
                     className={`btn-energy w-full flex items-center justify-center gap-3 text-lg py-4 ${
-                      comboSelectionIncomplete ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''
+                      !canPurchase ? "opacity-50 cursor-not-allowed pointer-events-none" : ""
                     }`}
                   >
-                    <MessageCircle className="w-6 h-6" />
-                    <span>Order Now</span>
-                    <ExternalLink className="w-5 h-5" />
+                    <ShoppingCart className="w-6 h-6" />
+                    <span>Add to Cart</span>
                   </button>
 
-                  <p className="text-center text-sm text-muted-foreground mt-3">
-                    Secure ordering via WhatsApp Business
-                  </p>
-                </>
+                  <button
+                    onClick={handleBuyNow}
+                    disabled={!canPurchase}
+                    className={`w-full flex items-center justify-center gap-3 text-lg py-4 rounded-2xl font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 ${
+                      !canPurchase ? "opacity-50 cursor-not-allowed pointer-events-none" : ""
+                    }`}
+                  >
+                    <Zap className="w-5 h-5" />
+                    <span>Buy Now</span>
+                  </button>
+
+                  <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground pt-1">
+                    <Truck className="w-4 h-4" />
+                    <span>Cash on delivery · {shippingSummaryLabel()}</span>
+                  </div>
+
+                  <a
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      trackPixelEvent("Contact", { content_name: product.name })
+                    }
+                    className="flex items-center justify-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors pt-1"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Questions about this rope? Message us on WhatsApp
+                  </a>
+                </div>
               )}
             </div>
 
             {/* Description & Highlights */}
             <div className="space-y-8">
-              {/* Description */}
               <div className="bg-card rounded-3xl border p-8">
                 <h2 className="text-3xl font-bold text-foreground mb-4">About This Product</h2>
-                <div className="text-lg text-muted-foreground leading-relaxed" dangerouslySetInnerHTML={{ __html: product.description }} />
+                <div
+                  className="text-lg text-muted-foreground leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: product.description }}
+                />
               </div>
 
-              {/* Highlights */}
               <div className="bg-card rounded-3xl border p-8">
                 <h2 className="text-3xl font-bold text-foreground mb-6">Key Highlights</h2>
                 <ul className="space-y-4">
@@ -307,14 +420,34 @@ const ProductDetails = () => {
                 </ul>
               </div>
 
-              {/* Guarantee */}
+              {/* How ordering works — sets expectations before checkout */}
+              <div className="bg-card rounded-3xl border p-8">
+                <h2 className="text-2xl font-bold text-foreground mb-4">How ordering works</h2>
+                <ol className="space-y-3 text-muted-foreground">
+                  <li className="flex gap-3">
+                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-bold flex items-center justify-center flex-shrink-0">
+                      1
+                    </span>
+                    Add your rope to the cart and check out — no account needed.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-bold flex items-center justify-center flex-shrink-0">
+                      2
+                    </span>
+                    We call you to confirm your order and delivery time.
+                  </li>
+                  <li className="flex gap-3">
+                    <span className="w-6 h-6 rounded-full bg-primary/10 text-primary text-sm font-bold flex items-center justify-center flex-shrink-0">
+                      3
+                    </span>
+                    Pay in cash when it arrives. Delivery: {shippingSummaryLabel()}.
+                  </li>
+                </ol>
+              </div>
+
               <div className="bg-primary/10 rounded-3xl border border-primary/20 p-8">
                 <h3 className="text-2xl font-bold text-foreground mb-4">Our Guarantee</h3>
                 <div className="space-y-3">
-                  {/* <div className="flex items-center gap-3 text-muted-foreground">
-                    <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                    <span>30-day satisfaction guarantee</span>
-                  </div> */}
                   <div className="flex items-center gap-3 text-muted-foreground">
                     <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
                     <span>Lifetime customer support</span>
@@ -325,60 +458,16 @@ const ProductDetails = () => {
                   </div>
                 </div>
               </div>
+
+              <div className="text-center">
+                <Link to="/cart" className="text-primary font-semibold hover:underline">
+                  View your cart
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Confirmation Dialog */}
-      {showConfirmDialog && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-card rounded-3xl border max-w-md w-full p-8 animate-in zoom-in-95 duration-200">
-            <div className="text-center mb-6">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <MessageCircle className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-2xl font-bold text-foreground mb-2">
-                Complete Your Order
-              </h3>
-              <p className="text-muted-foreground">
-                You'll be redirected to WhatsApp to finalize your purchase of the{" "}
-                <span className="font-semibold text-foreground">
-                  {product.name}
-                  {isCombo && comboOptions && selectedSpeedColor && selectedBeadedColor &&
-                    ` (${comboOptions.speed.find((o) => o.id === selectedSpeedColor)?.label} + ${comboOptions.beaded.find((o) => o.id === selectedBeadedColor)?.label})`}
-                </span>{" "}
-                for{" "}
-                <span className="font-semibold text-primary">{product.price}</span>.
-              </p>
-            </div>
-
-            <div className="space-y-3">
-              <button
-                onClick={handleConfirmPurchase}
-                className="btn-energy w-full flex items-center justify-center gap-3"
-              >
-                <MessageCircle className="w-5 h-5" />
-                <span>Continue to WhatsApp</span>
-                <ExternalLink className="w-4 h-4" />
-              </button>
-
-              <button
-                onClick={() => setShowConfirmDialog(false)}
-                className="w-full py-3 px-4 rounded-2xl border border-border hover:bg-muted/50 transition-colors text-muted-foreground"
-              >
-                Cancel
-              </button>
-            </div>
-
-            <div className="mt-4 text-center">
-              <p className="text-xs text-muted-foreground">
-                🔒 Secure ordering • Fast response • Fast delivery
-              </p>
-            </div>
-          </div>
-        </div>
-      )}
 
       <Footer />
     </main>
