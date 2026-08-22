@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Star } from "lucide-react";
 import Footer from "@/components/Footer";
-import productsData from "@/data/products.json";
+import { getAllProducts } from "@/lib/catalog";
+import { formatMoney } from "@/config/commerce";
 
 const Collection = () => {
   const navigate = useNavigate();
 
-  const products = Object.values(productsData);
+  const products = getAllProducts();
 
   return (
     <main className="min-h-screen bg-background">
@@ -36,22 +37,48 @@ const Collection = () => {
             {products.map((product) => (
               <div
                 key={product.id}
-                className={`relative bg-card rounded-3xl border-2 p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 ${
-                  product.popular ? 'border-primary shadow-[var(--glow-shadow)]' : 'border-border'
+                className={`relative bg-card rounded-3xl border-2 p-8 transition-all duration-300 ${
+                  product.soldOut
+                    ? "border-border opacity-75"
+                    : `hover:shadow-2xl hover:-translate-y-2 ${
+                        product.popular
+                          ? "border-primary shadow-[var(--glow-shadow)]"
+                          : "border-border"
+                      }`
                 }`}
               >
-                {/* Popular Badge */}
-                {product.popular && (
+                {/* Status Badge */}
+                {product.soldOut ? (
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-primary text-primary-foreground px-6 py-2 rounded-full text-sm font-bold">
-                      BEST VALUE
+                    <div className="bg-destructive text-destructive-foreground px-6 py-2 rounded-full text-sm font-bold">
+                      SOLD OUT
                     </div>
                   </div>
+                ) : (
+                  product.popular && (
+                    <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                      <div className="bg-primary text-primary-foreground px-6 py-2 rounded-full text-sm font-bold">
+                        BEST VALUE
+                      </div>
+                    </div>
+                  )
                 )}
 
-                {/* Product Icon */}
+                {/* Product Image */}
                 <div className="text-center mb-6">
-                  <div className="text-6xl mb-4">{product.image}</div>
+                  {product.listImage ? (
+                    <img
+                      src={product.listImage}
+                      alt={product.name}
+                      className={`w-full h-64 object-cover rounded-2xl mb-4 ${
+                        product.soldOut ? "grayscale" : ""
+                      }`}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div className="text-6xl mb-4">{product.emoji}</div>
+                  )}
                   <h3 className="text-2xl font-bold text-foreground">{product.name}</h3>
                 </div>
 
@@ -59,10 +86,12 @@ const Collection = () => {
                 <div className="text-center mb-6">
                   {product.originalPrice && (
                     <div className="text-lg text-muted-foreground line-through mb-1">
-                      {product.originalPrice}
+                      {formatMoney(product.originalPrice)}
                     </div>
                   )}
-                  <span className="text-4xl font-bold text-primary">{product.price}</span>
+                  <span className="text-4xl font-bold text-primary">
+                    {formatMoney(product.price)}
+                  </span>
                 </div>
 
                 {/* Features */}
@@ -76,16 +105,26 @@ const Collection = () => {
                 </ul>
 
                 {/* CTA Button */}
-                <button
-                  onClick={() => navigate(`/product/${product.id}`)}
-                  className={`w-full py-4 rounded-2xl font-semibold transition-all duration-300 ${
-                    product.popular
-                      ? 'btn-energy'
-                      : 'bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground'
-                  }`}
-                >
-                  View Details
-                </button>
+                {product.soldOut ? (
+                  <button
+                    disabled
+                    aria-disabled="true"
+                    className="w-full py-4 rounded-2xl font-semibold bg-muted text-muted-foreground cursor-not-allowed"
+                  >
+                    Sold Out
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => navigate(product.url)}
+                    className={`w-full py-4 rounded-2xl font-semibold transition-all duration-300 ${
+                      product.popular
+                        ? "btn-energy"
+                        : "bg-secondary text-secondary-foreground hover:bg-primary hover:text-primary-foreground"
+                    }`}
+                  >
+                    View Details
+                  </button>
+                )}
               </div>
             ))}
           </div>

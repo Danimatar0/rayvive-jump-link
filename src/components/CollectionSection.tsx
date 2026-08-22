@@ -1,14 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
-import productsData from "../data/products.json";
-import novaWhiteImg from "../assets/nova-white-img.png";
-import aetherDottedImg from "../assets/aether-dotted-img.jpeg";
-import comboPackageImg from "../assets/combo-package-visual.png";
-import flareImg from "../assets/flare-red-img.jpg";
-import umbraImg from "../assets/umbra-black-img.jpg";
-import nocturneImg from "../assets/nocturne-black-img.jpg";
-import vesperImg from "../assets/vesper-blue-img.jpeg";
+import { getAllProducts } from "@/lib/catalog";
+import { formatMoney } from "@/config/commerce";
 
 const CATEGORIES = [
   { id: "all", label: "All Ropes" },
@@ -20,26 +14,12 @@ const CollectionSection = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("all");
 
-  const allProducts = Object.values(productsData);
+  const allProducts = getAllProducts();
 
   const products = allProducts.filter((product) => {
     if (activeCategory === "all") return true;
-    const cats = ((product as { categories?: string[] }).categories) ?? [];
-    return cats.some((c) => c === activeCategory);
+    return product.categories.includes(activeCategory);
   });
-
-  const getProductImage = (imageFileName: string) => {
-    const imageMap: Record<string, string> = {
-      "nova-white-img.png": novaWhiteImg,
-      "aether-dotted-img.jpeg": aetherDottedImg,
-      "combo-package-visual.png": comboPackageImg,
-      "flare-red-img.jpg": flareImg,
-      "umbra-black-img.jpg": umbraImg,
-      "nocturne-black-img.jpg": nocturneImg,
-      "vesper-blue-img.jpeg": vesperImg,
-    };
-    return imageMap[imageFileName];
-  };
 
   return (
     <section id="collection" className="py-24 bg-muted/30 scroll-mt-20">
@@ -106,12 +86,12 @@ const CollectionSection = () => {
               <div className="text-center mb-6">
                 {product.listImage ? (
                   <img
-                    src={getProductImage(product.listImage)}
+                    src={product.listImage}
                     alt={product.name}
                     className={`w-full h-64 object-cover rounded-2xl mb-4 ${product.soldOut ? 'grayscale' : ''}`}
                   />
                 ) : (
-                  <div className="text-6xl mb-4">{product.image}</div>
+                  <div className="text-6xl mb-4">{product.emoji}</div>
                 )}
                 <h3 className="text-2xl font-bold text-foreground">{product.name}</h3>
               </div>
@@ -120,10 +100,10 @@ const CollectionSection = () => {
               <div className="text-center mb-6">
                 {product.originalPrice && (
                   <div className="text-lg text-muted-foreground line-through mb-1">
-                    {product.originalPrice}
+                    {formatMoney(product.originalPrice)}
                   </div>
                 )}
-                <span className="text-4xl font-bold text-primary">{product.price}</span>
+                <span className="text-4xl font-bold text-primary">{formatMoney(product.price)}</span>
               </div>
 
               {/* Features */}
