@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import BlackNovemberBanner from "@/components/BlackNovemberBanner";
 
 /**
  * Site header with the cart entry point.
@@ -40,6 +41,7 @@ const SiteHeader = () => {
           : "bg-background/90 backdrop-blur-md border-b border-border shadow-sm"
       }`}
     >
+      <BlackNovemberBanner />
       <nav className="container mx-auto px-6 h-16 flex items-center justify-between gap-4">
         <Link
           to="/"

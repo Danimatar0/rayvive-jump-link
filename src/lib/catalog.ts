@@ -12,6 +12,7 @@
 import productsData from "@/data/products.json";
 import { resolveProductImage } from "@/lib/productImages";
 import { MAX_QUANTITY_PER_LINE } from "@/config/commerce";
+import { isSaleActive } from "@/config/sale";
 
 export interface VariantOption {
   id: string;
@@ -48,6 +49,10 @@ export interface CatalogProduct {
   images: string[];
   categories: string[];
   popular: boolean;
+  /** Bundle-only product: kept out of the Our Collection grids. */
+  collectionHidden: boolean;
+  /** Sale-only product: stops being purchasable when the sale ends. */
+  saleOnly: boolean;
   /** True when the product cannot currently be bought. */
   soldOut: boolean;
   /** Units in stock; null means untracked / unlimited. */
@@ -68,6 +73,8 @@ interface RawProduct {
   highlights?: string[];
   description?: string;
   popular?: boolean;
+  collectionHidden?: boolean;
+  saleOnly?: boolean;
   soldOut?: boolean;
   stock?: number | null;
   categories?: string[];
@@ -80,6 +87,8 @@ const RAW = productsData as unknown as Record<string, RawProduct>;
 const VARIANT_GROUP_LABELS: Record<string, string> = {
   speed: "Speed Rope Color",
   beaded: "Beaded Rope Color",
+  rope1: "Rope 1 Color",
+  rope2: "Rope 2 Color",
 };
 
 /** Turns a display price like "$16.99" into 16.99. Returns 0 if unparseable. */
@@ -120,6 +129,8 @@ function toCatalogProduct(raw: RawProduct): CatalogProduct {
     images,
     categories: raw.categories ?? [],
     popular: Boolean(raw.popular),
+    collectionHidden: Boolean(raw.collectionHidden),
+    saleOnly: Boolean(raw.saleOnly),
     soldOut: Boolean(raw.soldOut),
     stock: raw.stock ?? null,
     variantGroups,
@@ -133,6 +144,11 @@ export function getAllProducts(): CatalogProduct[] {
   return cache;
 }
 
+/** Products shown in the Our Collection grids (bundle-only products excluded). */
+export function getCollectionProducts(): CatalogProduct[] {
+  return getAllProducts().filter((p) => !p.collectionHidden);
+}
+
 export function getProduct(id: string | undefined): CatalogProduct | undefined {
   if (!id) return undefined;
   return getAllProducts().find((p) => p.id === id);
@@ -141,6 +157,7 @@ export function getProduct(id: string | undefined): CatalogProduct | undefined {
 /** Whether the product can be added to the cart at all. */
 export function isPurchasable(product: CatalogProduct): boolean {
   if (product.soldOut) return false;
+  if (product.saleOnly && !isSaleActive()) return false;
   if (product.stock !== null && product.stock <= 0) return false;
   return true;
 }

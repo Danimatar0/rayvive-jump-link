@@ -18,6 +18,8 @@ import flareImg from "@/assets/flare-red-img.jpg";
 import umbraImg from "@/assets/umbra-black-img.jpg";
 import nocturneImg from "@/assets/nocturne-black-img.jpg";
 import vesperImg from "@/assets/vesper-blue-img.jpeg";
+import speedDuoVisual from "@/assets/speed-duo-visual.jpg";
+import beadedDuoVisual from "@/assets/beaded-duo-visual.jpg";
 
 const IMAGE_MAP: Record<string, string> = {
   "nova-white-img.png": novaWhiteImg,
@@ -32,6 +34,8 @@ const IMAGE_MAP: Record<string, string> = {
   "umbra-black-img.jpg": umbraImg,
   "nocturne-black-img.jpg": nocturneImg,
   "vesper-blue-img.jpeg": vesperImg,
+  "speed-duo-visual.jpg": speedDuoVisual,
+  "beaded-duo-visual.jpg": beadedDuoVisual,
 };
 
 /** Resolves a products.json filename to its bundled URL. */

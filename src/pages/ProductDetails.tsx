@@ -319,10 +319,12 @@ const ProductDetails = () => {
                     aria-disabled="true"
                     className="w-full flex items-center justify-center gap-3 text-lg py-4 rounded-2xl font-semibold bg-muted text-muted-foreground cursor-not-allowed"
                   >
-                    <span>Sold Out</span>
+                    <span>{product.saleOnly ? "Sale Ended" : "Sold Out"}</span>
                   </button>
                   <p className="text-center text-sm text-muted-foreground mt-3">
-                    This product is currently unavailable
+                    {product.saleOnly
+                      ? "This Black November bundle is no longer available"
+                      : "This product is currently unavailable"}
                   </p>
                 </>
               ) : (

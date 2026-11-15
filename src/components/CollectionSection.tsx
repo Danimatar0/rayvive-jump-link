@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Star } from "lucide-react";
-import { getAllProducts } from "@/lib/catalog";
+import { getCollectionProducts } from "@/lib/catalog";
 import { formatMoney } from "@/config/commerce";
 
 const CATEGORIES = [
@@ -14,7 +14,7 @@ const CollectionSection = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("all");
 
-  const allProducts = getAllProducts();
+  const allProducts = getCollectionProducts();
 
   const products = allProducts.filter((product) => {
     if (activeCategory === "all") return true;
