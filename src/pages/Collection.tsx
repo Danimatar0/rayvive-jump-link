@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Star } from "lucide-react";
 import Footer from "@/components/Footer";
-import { getAllProducts } from "@/lib/catalog";
+import { getCollectionProducts } from "@/lib/catalog";
 import { formatMoney } from "@/config/commerce";
 
 const Collection = () => {
   const navigate = useNavigate();
 
-  const products = getAllProducts();
+  const products = getCollectionProducts();
 
   return (
     <main className="min-h-screen bg-background">

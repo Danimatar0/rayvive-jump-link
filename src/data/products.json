@@ -153,7 +153,7 @@
     "id": "combo-package",
     "name": "Combo Package",
     "originalPrice": "$37",
-    "price": "$33.99",
+    "price": "$30.00",
     "image": "📦",
     "listImage": "combo-package-visual.png",
     "detailsImage": "combo-package-visual.png",
@@ -180,6 +180,60 @@
         { "id": "umbra", "label": "Umbra", "swatchClass": "bg-slate-900" }
       ],
       "beaded": [
+        { "id": "nocturne", "label": "Nocturne", "swatchClass": "bg-slate-900" },
+        { "id": "vesper", "label": "Vesper", "swatchClass": "bg-blue-500" }
+      ]
+    }
+  },
+  "speed-duo": {
+    "id": "speed-duo",
+    "name": "Speed Duo",
+    "originalPrice": "$37",
+    "price": "$30.00",
+    "image": "🔥",
+    "listImage": "speed-duo-visual.jpg",
+    "detailsImage": "speed-duo-visual.jpg",
+    "features": ["Two Speed Ropes", "Choose Both Colors", "Black November Bundle", "Train With a Partner"],
+    "description": "Two speed ropes in one Black November bundle. Pick any two colors from Nova White, Umbra and Flare, mix them or match them. Train side by side with a partner, gift one, or keep a spare in your gym bag.",
+    "highlights": ["Includes two speed ropes in your choice of colors", "Mix or match Nova White, Umbra and Flare", "Black November price, available until November 30"],
+    "popular": false,
+    "collectionHidden": true,
+    "saleOnly": true,
+    "categories": ["speed"],
+    "comboOptions": {
+      "rope1": [
+        { "id": "nova-white", "label": "Nova White", "swatchClass": "bg-white border border-slate-300" },
+        { "id": "flare", "label": "Flare", "swatchClass": "bg-red-500" },
+        { "id": "umbra", "label": "Umbra", "swatchClass": "bg-slate-900" }
+      ],
+      "rope2": [
+        { "id": "nova-white", "label": "Nova White", "swatchClass": "bg-white border border-slate-300" },
+        { "id": "flare", "label": "Flare", "swatchClass": "bg-red-500" },
+        { "id": "umbra", "label": "Umbra", "swatchClass": "bg-slate-900" }
+      ]
+    }
+  },
+  "beaded-duo": {
+    "id": "beaded-duo",
+    "name": "Beaded Duo",
+    "originalPrice": "$40",
+    "price": "$30.00",
+    "image": "🔥",
+    "listImage": "beaded-duo-visual.jpg",
+    "detailsImage": "beaded-duo-visual.jpg",
+    "features": ["Two Beaded Ropes", "Choose Both Colors", "Black November Bundle", "Built for Footwork"],
+    "description": "Two beaded ropes in one Black November bundle. Pick any two colors from Nocturne and Vesper, mix them or match them. Built for rhythm, footwork and tricks, ready for two athletes or one training bag.",
+    "highlights": ["Includes two beaded ropes in your choice of colors", "Mix or match Nocturne and Vesper", "Black November price, available until November 30"],
+    "popular": false,
+    "collectionHidden": true,
+    "saleOnly": true,
+    "categories": ["beaded"],
+    "comboOptions": {
+      "rope1": [
+        { "id": "nocturne", "label": "Nocturne", "swatchClass": "bg-slate-900" },
+        { "id": "vesper", "label": "Vesper", "swatchClass": "bg-blue-500" }
+      ],
+      "rope2": [
         { "id": "nocturne", "label": "Nocturne", "swatchClass": "bg-slate-900" },
         { "id": "vesper", "label": "Vesper", "swatchClass": "bg-blue-500" }
       ]

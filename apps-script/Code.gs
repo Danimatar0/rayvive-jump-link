@@ -36,11 +36,31 @@ var PRODUCTS = {
   'vesper':        { name: 'Vesper',        price: 19.99, available: true },
   'combo-package': {
     name: 'Combo Package',
-    price: 33.99,
+    price: 30,
     available: true,
     variantGroups: {
       speed:  ['nova-white', 'flare', 'umbra'],
       beaded: ['nocturne', 'vesper']
+    }
+  },
+  'speed-duo': {
+    name: 'Speed Duo',
+    price: 30,
+    // Black November bundle: orderable only until the sale ends (Beirut time).
+    get available() { return new Date() <= new Date('2026-11-30T23:59:59+02:00'); },
+    variantGroups: {
+      rope1: ['nova-white', 'flare', 'umbra'],
+      rope2: ['nova-white', 'flare', 'umbra']
+    }
+  },
+  'beaded-duo': {
+    name: 'Beaded Duo',
+    price: 30,
+    // Black November bundle: orderable only until the sale ends (Beirut time).
+    get available() { return new Date() <= new Date('2026-11-30T23:59:59+02:00'); },
+    variantGroups: {
+      rope1: ['nocturne', 'vesper'],
+      rope2: ['nocturne', 'vesper']
     }
   }
 };
